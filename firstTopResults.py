@@ -1,6 +1,7 @@
-import json, requests,geocoder, time
+import json, requests, time
 from geopy.geocoders import Nominatim
-from pygeocoder import Geocoder
+#from pygeocoder import Geocoder
+import geocoder, requests
 from getDescription import PoiDescription
 
 
