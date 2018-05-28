@@ -14,15 +14,13 @@ def leastMisery(raw_data):
     for key, value in raw_data.items():
         minimo= int(min(value))
         raw_data[key]=minimo
-
     return raw_data
 
 
 
 
 
-# df_a = pd.DataFrame(raw_data,columns = ['A', 'B','C','D','E','F','G','H','I','J'],index=[0])
-# print(df_a)
+
 #
 # listOrdered= OrderedDict(sorted(raw_data.items(), reverse=True,key=lambda t: t[1]))
 #

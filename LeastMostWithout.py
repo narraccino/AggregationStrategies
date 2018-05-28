@@ -21,6 +21,12 @@ raw_data = {
 
 }
 
+
+df_a = pd.DataFrame(raw_data,columns = ['A', 'B','C','D','E','F','G','H','I','J'])
+print(df_a, '\n')
+
+
+
 data1 = copy.deepcopy(raw_data)
 new_list1= leastMisery(data1)
 
