@@ -1,6 +1,6 @@
 from firstTopResults import topResults
 from users_registration import registration
-from ranking import first_rank
+from ratings import first_rate
 
 try:
     number= int(input('\n\nHello, how many people are there in your group?\n\n'))
@@ -8,7 +8,7 @@ try:
         print('You have chosen Group Recommendation\n\n')
         listName= registration(number)
         [listPOI, listCat]= topResults()
-        first_rank(listName,listPOI, listCat)
+        first_rate(listName,listPOI, listCat)
         #print("USERS LIST:", listName, '\n')
         #3
         # print("POIs LIST:", listPOI, '\n')

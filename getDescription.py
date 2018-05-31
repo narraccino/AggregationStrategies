@@ -1,6 +1,7 @@
-import json, requests,geocoder, time
+import json, requests,geocoder, time, wikipedia
+from getPhotos import getPhotos
 
-def PoiDescription(venue_ID):
+def PoiDescription(venue_ID,name):
     url_inc= 'https://api.foursquare.com/v2/venues/'
     url = url_inc+ venue_ID
     #print('Venue ID: ',venue_ID)
@@ -17,9 +18,14 @@ def PoiDescription(venue_ID):
 
     try:
         category= json_data['response']['venue']['categories'][0]['shortName']
-        print('CATEGORY: ',category,'\n\n')
+        print(wikipedia.summary(name))
+        getPhotos(json_data)
+
+
     except:
-        print('NO DESCRIPTION FOR THIS POI\n\n')
-        category= []
+        print('CATEGORY: ', category, '\n\n')
 
     return category
+
+
+
