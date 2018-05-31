@@ -16,7 +16,7 @@ def topResults():
       #near = 'Amsterdam',  #location.city,
       radius= 1000,
       section='arts',
-      limit=20
+      limit=10
     )
 
     print("You are in Amsterdam\n\n")
