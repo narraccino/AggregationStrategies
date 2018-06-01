@@ -2,6 +2,7 @@ from json.decoder import NaN
 # from saveData import prepareTableCSV
 # from saveData import saveUserRankings
 from FA import FairenessAverage
+from LMW import LeastMostWithout
 import numpy as np
 
 def first_rate(listName, listPOI, listCat):
@@ -29,7 +30,14 @@ def first_rate(listName, listPOI, listCat):
     #             print(int(ratingsArrayPOI[i][j]))
     #         print('\n\n')
 
-    final_list=FairenessAverage(ratingsArrayPOI, listPOI, listName)
-    print("The ordered list is this:")
+    final_listA=FairenessAverage(ratingsArrayPOI, listPOI, listName)
+    print("The ordered list with FairenessAverage is this:")
     for i in range(0,len_POI):
-        print(i+1,'.',final_list[i])
+        print(i+1,'.',final_listA[i])
+
+    print('\n\n')
+
+    final_listB, len_POIModified = LeastMostWithout(ratingsArrayPOI, listPOI, listName)
+    print("The ordered list with LeastMostWithout is this:")
+    for i in range(0, len_POIModified):
+        print(i + 1, '.', final_listB[i])
