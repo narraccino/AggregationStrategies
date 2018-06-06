@@ -1,5 +1,6 @@
 import json, requests,geocoder, time, wikipedia
 from getPhotos import getPhotos
+from getSPARQLDescription import getSPARQLDescription
 
 def PoiDescription(venue_ID,name):
     url_inc= 'https://api.foursquare.com/v2/venues/'
@@ -19,12 +20,11 @@ def PoiDescription(venue_ID,name):
     try:
         category= json_data['response']['venue']['categories'][0]['shortName']
         print(wikipedia.summary(name))
+        # print(getSPARQLDescription(name))
+        print('CATEGORY: ', category, '\n\n')
         getPhotos(json_data)
-
-
     except:
         print('CATEGORY: ', category, '\n\n')
-
     return category
 
 
