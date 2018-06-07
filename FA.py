@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import OrderedDict
+
 from IPython.display import display
 from IPython.display import Image
 import itertools, copy
@@ -32,6 +33,10 @@ def extractValue(i,df_a, usersNumber):
         # Creation of empty dict and list
 
 def FairenessAverage(ratingsArrayPOI, list_POI, list_Names):
+
+
+
+
     final_Dict = list()
     # Obtaining Users Number and POIs number
     usersNumber = len(list_Names)

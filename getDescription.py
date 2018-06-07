@@ -19,12 +19,13 @@ def PoiDescription(venue_ID,name):
 
     try:
         category= json_data['response']['venue']['categories'][0]['shortName']
-        print(wikipedia.summary(name))
+        #print(wikipedia.summary(name))
         # print(getSPARQLDescription(name))
-        print('CATEGORY: ', category, '\n\n')
+        #print('CATEGORY: ', category, '\n\n')
         getPhotos(json_data)
     except:
-        print('CATEGORY: ', category, '\n\n')
+        #print('CATEGORY: ', category, '\n\n')
+        print("")
     return category
 
 
