@@ -17,7 +17,7 @@ def first_rate(username, listPOI, listCat):
         print(listPOI[j], ' (category: ', listCat[j],')', '\n')
         rate= int(input('Rate this POI (1-10) or NA: ---->'))
         ratingsArrayPOI.append(rate)
-        print(type(ratingsArrayPOI))
+        #print(type(ratingsArrayPOI))
         print('\n')
 
     return ratingsArrayPOI

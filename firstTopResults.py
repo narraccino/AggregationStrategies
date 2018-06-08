@@ -34,7 +34,7 @@ def topResults():
     for poi in range(num):
         venue_ID = json_data['response']['groups'][0]['items'][poi]['venue']['id']
         poi= json_data['response']['groups'][0]['items'][poi]['venue']['name']
-        #print('\n\n',i, '.', poi, '\n')
+        print('\n\n',i, '.', poi, '\n')
         listPoi.append(poi)
         #print('VENUE ID: ', venue_ID,'\n')
         listCategory.append(PoiDescription(venue_ID,poi))
