@@ -1,6 +1,5 @@
 import json
 
-# urls_list= list()
 
 def getPhotos(json_data):
     try:
