@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from collections import OrderedDict
 
 from IPython.display import display
@@ -37,7 +38,11 @@ def FairenessAverage(ratingsArrayPOI, list_POI, list_Names):
 
 
 
-    final_Dict = list()
+
+
+
+
+    final_list = list()
     # Obtaining Users Number and POIs number
     usersNumber = len(list_Names)
     poiNumber = len(list_POI)
@@ -55,14 +60,14 @@ def FairenessAverage(ratingsArrayPOI, list_POI, list_Names):
                 if(len(df_a.columns)==0):
                         break
                 df_a,maximumColumnLet = extractValue(i,df_a,usersNumber)
-                final_Dict.append(maximumColumnLet)
+                final_list.append(maximumColumnLet)
                 if(i==usersNumber-1):
                         for j in range(usersNumber-1,-1,-1):
                                 if (len(df_a.columns)==0):
                                         break
                                 df_a,maximumColumnLet= extractValue(j,df_a,usersNumber)
-                                final_Dict.append(maximumColumnLet)
+                                final_list.append(maximumColumnLet)
                 if (len(df_a.columns)==0):
                         break
-    return final_Dict
+    return final_list
 
