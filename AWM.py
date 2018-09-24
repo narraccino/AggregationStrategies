@@ -17,6 +17,7 @@ def getKeys(raw_data, threshold):
     return colonne
 
 
+
 def averageWithoutMisery(raw_data):
     dataset = copy.deepcopy(raw_data)
     for key, value in dataset.items():

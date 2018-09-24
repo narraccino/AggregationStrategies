@@ -22,11 +22,11 @@ def PoiDescription(venue_ID,name):
         #print(wikipedia.summary(name))
         # print(getSPARQLDescription(name))
         print('CATEGORY: ', category, '\n\n')
-        getPhotos(json_data)
+        image = getPhotos(json_data)
     except:
         print('CATEGORY: ', category, '\n\n')
         print("")
-    return category
+    return category, image
 
 
 

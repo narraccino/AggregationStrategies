@@ -59,6 +59,8 @@ def FairenessAverage(ratingsArraylist, list_POI, list_Names):
 
         row = unsorted_df.sort_values(by=i, ascending=False, axis=1)
 
+        # print(row)
+
         df_a = pd.DataFrame(ratingsArrayPOI, columns=list_POI)
         somma = df_a.sum()
         df_a.loc['Total'] = df_a.sum()
@@ -75,8 +77,9 @@ def FairenessAverage(ratingsArraylist, list_POI, list_Names):
             columns = bi.index[bi[0:] == True].tolist()
             if columns != []:
                 df1 = pd.DataFrame(row, columns=columns)
-                # print(df1)
+                print(df1)
                 df1 = df1.sort_values(by=3, ascending=False, axis=1)
+                #df1 = df1.sort_values(by=df1.shape[0]-1, ascending=False, axis=1)
                 # print(df1)
                 columns = df1.columns.tolist()
 

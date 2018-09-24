@@ -14,4 +14,14 @@ def getPhotos(json_data):
 
 
 
+    numPics = len(json_data['response']['venue']['photos']['groups'][0]['items'])
+    if (numPics > 0):
+        url = json_data['response']['venue']['photos']['groups'][0]['items'][0]['prefix'] + str('width') + str(
+            json_data['response']['venue']['photos']['groups'][0]['items'][0]['width']) + \
+              json_data['response']['venue']['photos']['groups'][0]['items'][0]['suffix']
+        return url
+    else:
+        return ""
+
+
 

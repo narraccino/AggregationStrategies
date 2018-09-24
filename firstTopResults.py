@@ -30,6 +30,7 @@ def topResults():
     listPoi = list()
     listCategory= list()
     listIDPOI= list()
+    listImages = list()
 
     for poi in range(num):
         venue_ID = json_data['response']['groups'][0]['items'][poi]['venue']['id']
@@ -37,12 +38,15 @@ def topResults():
         print('\n\n',i, '.', poi, '\n')
         listPoi.append(poi)
         #print('VENUE ID: ', venue_ID,'\n')
-        listCategory.append(PoiDescription(venue_ID,poi))
+        category, image = PoiDescription(venue_ID,poi)
+        listCategory.append(category)
         listIDPOI.append(venue_ID)
+        listImages.append(image)
+
         i=i+1
 
-    return listPoi, listCategory,listIDPOI
-
+    # return listPoi, listCategory,listIDPOI
+    return listPoi, listCategory, listIDPOI, listImages
 
 
 
