@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/buttons.css') }}">
+
+
+    <title>Title</title>
+</head>
+    <body>
+
+    <script language="javascript" type="text/javascript">
+        function bye(){
+            document.getElementById("btn-container").style.display = "none";
+            document.getElementById("bye-container").style.display = "block";
+        }
+    </script>
+
+    <div class="btn-group-vertical group" id="btn-container">
+        <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('signinClick') }}">Sign up</a>
+        <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('createGroupClick') }}">Sign in</a>
+        <a type="button" class="btn btn-primary btn-lg" onclick="bye();">Exit</a>
+    </div>
+
+    <div id="bye-container" style="display: none;">
+        <h1 class="bye">Bye!</h1>
+    </div>
+
+</div>
+
+    </body>
+</html>

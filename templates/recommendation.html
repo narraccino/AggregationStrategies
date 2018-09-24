@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ratings.css') }}">
+</head>
+<body>
+
+    <script src="{{ url_for('static',filename='ratings.js') }}"></script>
+
+    <!--<div style="position: relative; display: none;" id="default" value="0">-->
+
+    <!--<div class="metadata" style="display: inline-block; position: absolute; top: 20%">-->
+    <!--<p class="poi"></p>-->
+    <!--<p class="cat"></p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="spacing" style="display: inline-block; width: 75px"></div>&ndash;&gt;-->
+    <!--<div class="rateyo" style="display: inline-block; position: absolute; top: 25%"></div>-->
+
+    <div id="fairness-container">
+
+        <p class="fairness" id="fairness-title">The ordered list with FairenessAverage is this:</p>
+        <ol id="fairness-list">
+
+        </ol>
+
+    </div>
+
+    <div id="least-container">
+
+        <p class="least" id="least-title">The ordered list with LeastMostWithout is this:</p>
+
+        <ol id="least-list">
+
+        </ol>
+
+    </div>
+
+
+    <script>
+        var fairness = '{{ fairness|tojson|safe }}';
+        fairness = JSON.parse(fairness);
+        var least = '{{ least|tojson|safe }}';
+        least = JSON.parse(least);
+        pop_rec(fairness, least);
+    </script>
+
+</div>
+</body>
+</html>
