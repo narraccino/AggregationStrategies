@@ -66,6 +66,13 @@ function populate(data){
         var description = div.getElementsByClassName('description')[0];
         description.innerText = d.description;
 
+        // var sito = div.getElementsByClassName('sito')[0];
+        // sito.innerText = d.sito;
+        var sito= div.getElementsByClassName('sito')[0];
+        var str = d.sito;
+        var result = str.link(d.sito);
+        sito.innerHTML = result;
+
         var spacing = document.createElement("div");
         spacing.classList.add("spacing");
         spacing.setAttribute("style", "display: inline-block; width: 600px");

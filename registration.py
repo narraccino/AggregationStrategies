@@ -18,6 +18,7 @@ listCat = list()
 listID = list()
 listImages = list()
 listDescriptions = list()
+listSites = list()
 
 check = False
 index = 0
@@ -283,6 +284,8 @@ def search():
             d['id'] = listID[i]
             d['image'] = listImages[i]
             d['description'] = listDescriptions[i]
+            d['sito'] = listSites[i]
+
             array.append(d)
 
         dicto = {"dict": array}
@@ -429,6 +432,8 @@ if __name__ == "__main__":
         listImages = file.read().splitlines()
     with open("descriptions") as file:
         listDescriptions = file.read().splitlines()
+    with open("site") as file:
+        listSites = file.read().splitlines()
 
 
     app.run()
