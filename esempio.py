@@ -9,7 +9,6 @@ def deleteExcept(answ,nQuest,df):
         df_a[df_a[:] == 'B'] = 0
         df.loc[nQuest] = df_a
 
-
     else:
         df_a = df.loc[nQuest]
         df_a[df_a[:] == 'A'] = 0
