@@ -1,6 +1,6 @@
-import json, requests,geocoder, time, wikipedia
-from getPhotos import getPhotos
-from getSPARQLDescription import getSPARQLDescription
+import json, requests, time
+from Loft.getPhotos import getPhotos
+
 
 def PoiDescription(venue_ID,name):
     url_inc= 'https://api.foursquare.com/v2/venues/'

@@ -1,13 +1,10 @@
 import mysql.connector
 from random import randint
 import flask
-from firstTopResults import topResults
-from ratings import first_rate
 from FA import FairenessAverage
 from LMW import LeastMostWithout
 import numpy as np
 import json
-import page_html
 
 listUserID = list()
 listUsers = list()
@@ -77,11 +74,6 @@ def signin():
             print("Transaction refused")
             db.close()
             return flask.render_template('error.html')
-
-
-
-
-
 
 
 @app.route("/login", methods=["POST"])

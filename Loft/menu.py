@@ -1,7 +1,7 @@
 from registration import signin, login, search, commitGroup,commitPOI,commitRate
 import sys
-from firstTopResults import topResults
-from ratings import first_rate
+from Loft.firstTopResults import topResults
+from Loft.ratings import first_rate
 from FA import FairenessAverage
 from LMW import LeastMostWithout
 import numpy as np

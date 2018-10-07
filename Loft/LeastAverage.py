@@ -1,7 +1,4 @@
-from LM import leastMisery
-from MP import mostPleasure
-from AWM import getKeys, averageWithoutMisery
-from utility import mergeDictionaries, match, orderList
+from Loft.LM import leastMisery
 import pandas as pd
 import copy
 threshold=4

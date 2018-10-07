@@ -1,8 +1,7 @@
-import json, requests, time
-from geopy.geocoders import Nominatim
+import json, time
 #from pygeocoder import Geocoder
-import geocoder, requests
-from getDescription import PoiDescription
+import requests
+from Loft.getDescription import PoiDescription
 
 def topResults():
     url = 'https://api.foursquare.com/v2/venues/explore'

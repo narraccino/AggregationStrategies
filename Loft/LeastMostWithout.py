@@ -1,6 +1,6 @@
-from LM import leastMisery
-from MP import mostPleasure
-from AWM import getKeys, averageWithoutMisery
+from Loft.LM import leastMisery
+from Loft.MP import mostPleasure
+from Loft.AWM import getKeys, averageWithoutMisery
 from utility import mergeDictionaries, match, orderList
 import pandas as pd
 import copy
