@@ -4,6 +4,7 @@ from FA import FairenessAverage
 from LMW import LeastMostWithout
 import numpy as np
 
+
 listUserID = list()
 listUsers = list()
 ratingsArraylists = list()
