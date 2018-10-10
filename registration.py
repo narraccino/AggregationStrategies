@@ -1,10 +1,8 @@
-import mysql.connector
+import mysql.connector, flask, json
 from random import randint
-import flask
 from FA import FairenessAverage
 from LMW import LeastMostWithout
 import numpy as np
-import json
 
 listUserID = list()
 listUsers = list()
@@ -35,9 +33,6 @@ def signinClick():
 def createGroupClick():
     return flask.render_template("login.html")
 
-# @app.route("/rating")
-# def rating():
-#     return flask.render_template("ratings.html")
 @app.route("/signin", methods=["POST"])
 def signin():
     if flask.request.method == "POST":
@@ -300,18 +295,19 @@ def commitGroup(listUserID, nameGroup):
     for i in range(0, len(listUserID)):
 
         try:
-           # Execute the SQL command
-           #cursor.execute(sql)
+            # Execute the SQL command
+            #cursor.execute(sql)
 
-           cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup) VALUES (%s, %s, %s)", (groupID, listUserID[i], nameGroup))
+            cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup) VALUES (%s, %s, %s)", (groupID,listUserID[i], nameGroup))
 
-           # Commit your changes in the database
-           db.commit()
-           print("Group registered! ")
+            # Commit your changes in the database
+            db.commit()
+
+            print("Group registered! ")
         except:
-           # Rollback in case there is any error
-           db.rollback()
-           print("Transaction group refused")
+            # Rollback in case there is any error
+            db.rollback()
+            print("Transaction group refused")
 
 
 

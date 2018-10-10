@@ -1,10 +1,6 @@
 import pandas as pd
 import numpy as np
-from collections import OrderedDict
-
-from IPython.display import display
-from IPython.display import Image
-import itertools, copy
+import itertools
 
 
 def extractValue(i,df_a, usersNumber):
@@ -120,35 +116,3 @@ def FairenessAverage(ratingsArraylist, list_POI, list_Names):
     print(ultimate)
 
     return ultimate
-
-
-    #
-    # final_list = list()
-    # # Obtaining Users Number and POIs number
-    # usersNumber = len(list_Names)
-    # poiNumber = len(list_POI)
-    #
-    #
-    # # Building a dataframe from the complete table
-    # df_a = pd.DataFrame(ratingsArrayPOI, columns=list_POI)
-    # df_a.loc['Total'] = df_a.sum()
-    # print(df_a, '\n')
-    #
-    #
-    #
-    # while len(df_a.columns)!=0:
-    #     for i in range(0,usersNumber):
-    #             if(len(df_a.columns)==0):
-    #                     break
-    #             df_a,maximumColumnLet = extractValue(i,df_a,usersNumber)
-    #             final_list.append(maximumColumnLet)
-    #             if(i==usersNumber-1):
-    #                     for j in range(usersNumber-1,-1,-1):
-    #                             if (len(df_a.columns)==0):
-    #                                     break
-    #                             df_a,maximumColumnLet= extractValue(j,df_a,usersNumber)
-    #                             final_list.append(maximumColumnLet)
-    #             if (len(df_a.columns)==0):
-    #                     break
-    # return final_list
-    #
