@@ -26,13 +26,16 @@ app = flask.Flask(__name__)
 def welcome():
     return flask.render_template("index.html")
 
+
 @app.route("/signinClick")
 def signinClick():
     return flask.render_template("signin.html")
 
+
 @app.route("/createGroupClick")
 def createGroupClick():
     return flask.render_template("login.html")
+
 
 @app.route("/signin", methods=["POST"])
 def signin():
@@ -120,11 +123,12 @@ def login():
 def openAddUser():
     if flask.request.method == "POST":
         data = flask.request.form
+        global groupName
         groupName = data["groupName"]
         numberOfMembers = data["membersNumber"]
 
-        return flask.render_template("usersgroup.html", data=numberOfMembers)
 
+        return flask.render_template("usersgroup.html", data=numberOfMembers)
 
 @app.route("/addRates", methods=["POST"])
 def addRates():
@@ -284,7 +288,7 @@ def search():
         return flask.render_template("ratings.html", data=dicto)
 
 
-def commitGroup(listUserID, nameGroup):
+def commitGroup(listUserID, groupName):
     db = mysql.connector.connect(user='mattarella', password='mattarella',
                                   host='127.0.0.1',
                                   database='dbaggregationstrategies')
@@ -299,7 +303,7 @@ def commitGroup(listUserID, nameGroup):
             # Execute the SQL command
             #cursor.execute(sql)
 
-            cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup) VALUES (%s, %s, %s)", (groupID,listUserID[i], nameGroup))
+            cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup) VALUES (%s, %s, %s)", (groupID,listUserID[i], groupName))
 
             # Commit your changes in the database
             db.commit()
