@@ -1,3 +1,12 @@
+# In this code we apply 3 aggregation strategies:
+# Least Misery, Most Pleasure, Without Misery.
+# In the table of ratings (obtained by users) we added other 3 rows
+# the row of Least Misery (on each column we chose the minimum of the column)
+# the row of Most Pleasure (on each column we chose the maximum of the column)
+# the row of Sum (we have added up LM row and MP row)
+# We exclused columns that showed ratings lower of a threshold
+# At the end we ordered the list by the SUM row
+
 import pandas as pd
 import numpy as np
 import copy
@@ -40,21 +49,5 @@ def LeastMostWithout(ratingsArrayPOI, listPOI, listName):
     final_List = list(df_final.columns)
     final_List.reverse()
     return final_List, len(final_List)
-
-
-    # print("The sequence is: ")
-
-    # colonne = list(deflist.keys())
-    # # df_a = pd.DataFrame(deflist, columns=colonne, index=[0])
-    # # print(df_a)
-    #
-    # listOrdered = OrderedDict(sorted(deflist.items(), reverse=True, key=lambda t: t[1]))
-    #
-    # # print(listOrdered)
-    # lista = []
-    # for key, value in listOrdered.items():
-    #     lista.append(key)
-    #
-    # print('\n\n', lista)
 
 

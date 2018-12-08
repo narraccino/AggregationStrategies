@@ -1,4 +1,5 @@
 import mysql.connector, flask, json
+from clean import deletetables
 from random import randint
 from FA import FairenessAverage
 from LMW import LeastMostWithout
@@ -19,6 +20,8 @@ listSites = list()
 check = False
 index = 0
 
+#svuoto le tabelle
+deletetables()
 
 app = flask.Flask(__name__)
 
@@ -54,13 +57,15 @@ def signin():
 
         #sql = "INSERT INTO user(username, password) VALUES ('"+username+"', '"+password+"')"
 
-        username = data["name"]
+        firstname = data["firstname"]
+        lastname = data["lastname"]
+        username = data["username"]
         password = data["password"]
         try:
            # Execute the SQL command
            #cursor.execute(sql)
 
-           cursor.execute("INSERT INTO user(username, password) VALUES (%s, %s)", (username, password))
+           cursor.execute("INSERT INTO user(firstname, lastname, username, password) VALUES (%s, %s, %s, %s)", (firstname, lastname, username, password))
            # Commit your changes in the database
            db.commit()
            print("User registered! ")
@@ -99,8 +104,8 @@ def login():
             results = cursor.fetchall()
             for row in results:
                 userID = row[0]
-                name = row[1]
-                passw = row[2]
+                name = row[3]
+                passw = row[4]
 
                 if (passw == password):
                     # Now print fetched result
