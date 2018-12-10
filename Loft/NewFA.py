@@ -30,9 +30,10 @@ for i in range(len(list_Names)):
 
 for i in range(0,len(list_Names)):
     unsorted_df=pd.DataFrame(ratingsArrayPOI,columns=list_POI)
-    # print(unsorted_df)
+
 
     row= unsorted_df.sort_values(by=i, ascending=False, axis=1)
+
 
     df_a=pd.DataFrame(ratingsArrayPOI,columns=list_POI)
     somma= df_a.sum()
