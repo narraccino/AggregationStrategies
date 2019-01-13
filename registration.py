@@ -1,6 +1,7 @@
 import mysql.connector, flask, json
 from clean import deletetables
 from random import randint
+from check import checkGroups
 from FA import FairenessAverage
 from LMW import LeastMostWithout
 import numpy as np
@@ -179,6 +180,9 @@ def addRates():
         groupID= findGroupID(userID, groupName)
         commitRate(groupID, userID, listID, ratingsArray)
 
+        #check if there are groups into DB
+        checkGroups(userID)
+
         return flask.render_template("homeUser.html", user=userID)  # CONTROLLA L'INUTILE LIST USER'
 
 
@@ -224,7 +228,6 @@ def search():
 
     global check, userID
     countUsers=0
-
 
     if flask.request.method == "POST":
         data = flask.request.form
