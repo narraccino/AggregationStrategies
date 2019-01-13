@@ -106,7 +106,7 @@ def login():
         username = data["name"]
         password = data["password"]
 
-        sql = """SELECT * FROM user WHERE username = '%s'""" % (username)
+        sql = """SELECT * FROM user WHERE username = '%s' AND password= '%s'""" % (username, password)
 
         try:
             # Execute the SQL command
@@ -118,22 +118,23 @@ def login():
                 userID = row[0]
                 name = row[3]
                 passw = row[4]
-
-                if (passw == password):
-                    # Now print fetched result
-                    print("\nLogged: ", userID, name, passw)
-                    db.close()
-                    listUserID.append(userID)
-                    listUsers.append(username)
-                    return flask.render_template("homeUser.html")
+                # if (passw == password):
+                #     # Now print fetched result
+                #     print("\nLogged: ", userID, name, passw)
+                #     db.close()
+                #     listUserID.append(userID)
+                #     listUsers.append(username)
                     # return userID,name
-                else:
-                    print("Error username or password")
-                    db.close()
-
+                # else:
+                #     print("Error username or password")
+                #     db.close()
         except:
             print("Error: unable to fecth data")
+            print("Error username or password")
             db.close()
+
+    return flask.render_template("homeUser.html")
+
 
 
 #The user gives the name of the group and the number of the members
@@ -218,16 +219,18 @@ def addRates():
         #     return flask.render_template("recommendation.html", fairness=fairness_dict, least=least_dict)
 
 
-#Ratings
 @app.route("/search", methods=["POST"])
 def search():
 
-    global check
+    global check, userID
     countUsers=0
+
 
     if flask.request.method == "POST":
         data = flask.request.form
-        user_already_logged = listUserID[0]
+        # user_already_logged = listUserID[0]
+        listUserID.clear()
+        listUserID.append(userID)
 
         if not(check):
 
@@ -256,11 +259,11 @@ def search():
                     # Fetch all the rows in a list of lists.
                     results = cursor.fetchall()
                     for row in results:
-                        userID = row[0]
+                        userI = row[0]
                         name = row[1]
 
-                    listUserID.append(userID)
-                    listUsers.append(name)
+                    listUserID.append(userI)
+                    #listUsers.append(name)
                     countUsers= countUsers+1
 
                 except:
@@ -271,7 +274,7 @@ def search():
 
             db.close()
 
-            check = True
+            #check = True
 
 
         if(countUsers==len(data)):
@@ -330,6 +333,124 @@ def search():
         # return flask.render_template("ratings.html") # todo passare list poi e list cat
 
         return flask.render_template("ratings.html", data=dicto)
+
+
+
+
+
+
+#Ratings
+# @app.route("/search", methods=["POST"])
+# def search():
+#
+#     global check, userID
+#     countUsers=0
+#
+#     if flask.request.method == "POST":
+#         data = flask.request.form
+#         # user_already_logged = listUserID[0]
+#
+#         if not(check):
+#
+#             data = list(data.values())
+#
+#             data.remove('default')
+#
+#             for i in range(0, len(data)):
+#
+#                 userN = data[i]
+#
+#                 print(userN)
+#
+#                 db = mysql.connector.connect(user='mattarella', password='mattarella',
+#                                              host='127.0.0.1',
+#                                              database='dbaggregationstrategies')
+#
+#                 # prepare a cursor object using cursor() method
+#                 cursor = db.cursor()
+#
+#                 sql ="""SELECT * FROM user WHERE username = '%s'""" % (userN)
+#                 # sql = """SELECT * FROM user"""
+#                 try:
+#                     # Execute the SQL command
+#                     cursor.execute(sql)
+#                     # Fetch all the rows in a list of lists.
+#                     results = cursor.fetchall()
+#                     for row in results:
+#                         userID = row[0]
+#                         name = row[1]
+#
+#                     listUserID.append(userID)
+#                     listUsers.append(name)
+#                     countUsers= countUsers+1
+#
+#                 except:
+#                     print("Error: unable to fetch data")
+#                     listUserID.clear()
+#                     listUsers.clear()
+#                     db.close()
+#
+#             db.close()
+#
+#             check = True
+#
+#
+#         if(countUsers==len(data)):
+#             commitGroup(listUserID, groupName)
+#             #commit e registro gli utenti con voted 0
+#
+#         # check in db
+#         # if index > 0:
+#         #
+#         #     db = mysql.connector.connect(user='mattarella', password='mattarella',
+#         #                                  host='127.0.0.1',
+#         #                                  database='dbaggregationstrategies')
+#         #
+#         #     # prepare a cursor object using cursor() method
+#         #     cursor = db.cursor()
+#         #
+#         #     username = data["name"]
+#         #     password = data["password"]
+#         #
+#         #     sql = """SELECT * FROM user WHERE username = '%s'""" % (username)
+#         #
+#         #     try:
+#         #         # Execute the SQL command
+#         #         cursor.execute(sql)
+#         #         # Fetch all the rows in a list of lists.
+#         #         results = cursor.fetchall()
+#         #         for row in results:
+#         #             userID = row[0]
+#         #             name = row[1]
+#         #             passw = row[2]
+#         #
+#         #             if not(passw == password):
+#         #                 print("Error username or password")
+#         #                 db.close()
+#         #
+#         #     except:
+#         #         print("Error: unable to fecth data")
+#         #         db.close()
+#
+#         array = list()
+#
+#         for i in range(len(listPOI)):
+#             d = dict()
+#             d['poi'] = listPOI[i]
+#             d['cat'] = listCat[i]
+#             d['id'] = listID[i]
+#             d['image'] = listImages[i]
+#             d['description'] = listDescriptions[i]
+#             d['sito'] = listSites[i]
+#
+#             array.append(d)
+#
+#         dicto = {"dict": array}
+#
+#         # user that created the group
+#         # return flask.render_template("ratings.html") # todo passare list poi e list cat
+#
+#         return flask.render_template("ratings.html", data=dicto)
 
 
 #commit of groupname and userID of that group
@@ -457,7 +578,7 @@ def findGroupID(userID, groupName):
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
-
+    global groupID
     try:
         # Execute the SQL command
         # cursor.execute(sql)
@@ -466,7 +587,8 @@ def findGroupID(userID, groupName):
         cursor.execute(query, (userID, groupName))
 
         results = cursor.fetchall()
-        groupID = results[0]
+        group= results[0]
+        groupID = group[0]
         #print(groupID[0])
         print("group ID founded")
 
@@ -477,7 +599,7 @@ def findGroupID(userID, groupName):
 
     # disconnect from server
     db.close()
-    return groupID[0]
+    return groupID
 
 
 
