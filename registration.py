@@ -25,7 +25,7 @@ groupID=0
 userID=0
 
 #svuoto le tabelle
-deletetables()
+#deletetables()
 
 app = flask.Flask(__name__)
 
@@ -129,6 +129,9 @@ def login():
                 # else:
                 #     print("Error username or password")
                 #     db.close()
+
+
+            checkGroups(userID)
         except:
             print("Error: unable to fecth data")
             print("Error username or password")
