@@ -12,7 +12,7 @@ import numpy as np
 #groupName = ""
 
 
-userID=0
+# userID=0
 
 
 
@@ -26,7 +26,7 @@ app.secret_key= os.urandom(24)
 @app.route("/")
 def welcome():
     session['userID']=0
-    return flask.render_template("index.html", identification=userID)
+    return flask.render_template("index.html", identification=session['userID'])
 
 
 
@@ -147,7 +147,7 @@ def openAddUser():
         numberOfMembers = data["membersNumber"]
 
 
-        return flask.render_template("usersgroup.html", data=numberOfMembers, identification= userID)
+        return flask.render_template("usersgroup.html", data=numberOfMembers, identification= session['userID'])
 
 
 #The first user gives ratings for the list and then the web app returns the LOGIN page for the other user
@@ -189,9 +189,9 @@ def addRates():
         #check if there are groups into DB
         checkGroups(session['userID'])
 
-        userID=session['userID']
+        # userID=session['userID']
 
-        return flask.render_template("homeUser.html", user=userID)
+        return flask.render_template("homeUser.html", user=session['userID'])
 
 
 #RECOMMENDATION
