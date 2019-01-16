@@ -11,22 +11,26 @@
 
     <link rel="stylesheet" href="{{ url_for('static',filename='css/buttons.css') }}">
 
+    <script language="javascript" type="text/javascript">
+            function loadID(){
+                var uID = "{{identification}}"
+                document.getElementById("identifi").innerHTML= uID
+            }
 
+            function bye(){
+                document.getElementById("btn-container").style.display = "none";
+                document.getElementById("bye-container").style.display = "block";
+            }
+        </script>
     <title>Title</title>
 </head>
-    <body>
-
-    <script language="javascript" type="text/javascript">
-        function bye(){
-            document.getElementById("btn-container").style.display = "none";
-            document.getElementById("bye-container").style.display = "block";
-        }
-    </script>
+    <body onload="loadID()">
 
     <div class="btn-group-vertical group" id="btn-container">
         <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('signinClick') }}">Sign up</a>
         <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('createGroupClick') }}">Log in</a>
         <a type="button" class="btn btn-primary btn-lg" onclick="bye();">Exit</a>
+        <h1>ID: <span id="identifi"></span></h1>
     </div>
 
     <div id="bye-container" style="display: none;">

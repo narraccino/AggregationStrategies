@@ -34,7 +34,7 @@
 		<div class="contact100-map" id="google_map" data-map-x="52.00667" data-map-y="4.35556" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
 
 		<div class="wrap-contact100" id="wrap-container">
-
+			<h1>ID: <span id="identification"></span></h1>
 			<form id="form-grp" class="contact100-form validate-form" action="{{ url_for('search') }}" method="POST">
 				<span class="contact100-form-title">
 					Insert usernames for group NAME
@@ -55,6 +55,9 @@
                     <button class="contact100-form-btn">
                         SUBMIT
                     </button>
+					<button class="contact100-form-btn">
+                        LOGOUT
+                    </button>
                 </div>
 
 
@@ -63,6 +66,8 @@
 				<script type="text/javascript">
                     var membersNumber = parseInt('{{ data }}');
                     createUsernames(membersNumber);
+                    var userID = '{{ identification }}'
+					document.getElementById("identification").innerHTML= userID
                 </script>
 
 				<!--<div class="wrap-input100 validate-input" data-validate = "Please enter your password">-->

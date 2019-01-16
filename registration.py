@@ -1,4 +1,5 @@
-import mysql.connector, flask, json
+import mysql.connector, flask, json,os
+from flask import g, session
 from clean import deletetables
 from random import randint
 from check import checkGroups
@@ -7,32 +8,25 @@ from LMW import LeastMostWithout
 import numpy as np
 
 
-listUserID = list()
-listUsers = list()
-ratingsArraylists = list()
-groupName = ""
-listPOI = list()
-listCat = list()
-listID = list()
-listImages = list()
-listDescriptions = list()
-listSites = list()
 
-check = False
-index = 0
-groupID=0
-#IsADirectoryError
+#groupName = ""
+
+
 userID=0
 
+
+
 #svuoto le tabelle
-#deletetables()
+deletetables()
 
 app = flask.Flask(__name__)
+app.secret_key= os.urandom(24)
 
 #Visualize the page index.html with 2 buttons
 @app.route("/")
 def welcome():
-    return flask.render_template("index.html")
+    session['userID']=0
+    return flask.render_template("index.html", identification=userID)
 
 
 
@@ -115,10 +109,12 @@ def login():
             # Fetch all the rows in a list of lists.
             results = cursor.fetchall()
             for row in results:
-                global userID
+
+                session.pop('userID',None)
                 userID = row[0]
                 name = row[3]
                 passw = row[4]
+                session['userID']=userID
                 # if (passw == password):
                 #     # Now print fetched result
                 #     print("\nLogged: ", userID, name, passw)
@@ -146,12 +142,12 @@ def login():
 def openAddUser():
     if flask.request.method == "POST":
         data = flask.request.form
-        global groupName
-        groupName = data["groupName"]
+
+        session['groupName'] = data["groupName"]
         numberOfMembers = data["membersNumber"]
 
 
-        return flask.render_template("usersgroup.html", data=numberOfMembers)
+        return flask.render_template("usersgroup.html", data=numberOfMembers, identification= userID)
 
 
 #The first user gives ratings for the list and then the web app returns the LOGIN page for the other user
@@ -167,26 +163,35 @@ def addRates():
         ratingsArray = [int(e['rating']) for e in array]
         #ratingsArraylists.append(ratingsArray)
 
-        global index
+        # global index
+        #
+        # index += 1
 
-        index += 1
 
-        #print(index, listUsers)
+        listPOI = list()
+        listID = list()
 
-            # we convert the ratingsArrayLists in array
 
-        #ratingsArrayPOI = np.array(ratingsArraylists)
-        #print(ratingsArrayPOI)
+        with open("poi") as file:
+            listPOI = file.read().splitlines()
+        with open("id") as file:
+            listID = file.read().splitlines()
+
+
         commitPOI(listID, listPOI)
 
-        global groupID
-        groupID= findGroupID(userID, groupName)
-        commitRate(groupID, userID, listID, ratingsArray)
+
+
+        groupID= findGroupID(session['userID'], session['groupName'])
+        session['groupID']= groupID
+        commitRate(groupID, session['userID'], listID, ratingsArray)
 
         #check if there are groups into DB
-        checkGroups(userID)
+        checkGroups(session['userID'])
 
-        return flask.render_template("homeUser.html", user=userID)  # CONTROLLA L'INUTILE LIST USER'
+        userID=session['userID']
+
+        return flask.render_template("homeUser.html", user=userID)
 
 
 #RECOMMENDATION
@@ -229,62 +234,62 @@ def addRates():
 @app.route("/search", methods=["POST"])
 def search():
 
-    global check, userID
+
     countUsers=0
 
     if flask.request.method == "POST":
         data = flask.request.form
         # user_already_logged = listUserID[0]
-        listUserID.clear()
-        listUserID.append(userID)
+        listUserID= list()
+        listUserID.append(session['userID'])
 
-        if not(check):
+        #if not(check):
 
-            data = list(data.values())
+        data = list(data.values())
 
-            data.remove('default')
+        data.remove('default')
 
-            for i in range(0, len(data)):
+        for i in range(0, len(data)):
 
-                userN = data[i]
+            userN = data[i]
 
-                print(userN)
+            print(userN)
 
-                db = mysql.connector.connect(user='mattarella', password='mattarella',
-                                             host='127.0.0.1',
-                                             database='dbaggregationstrategies')
+            db = mysql.connector.connect(user='mattarella', password='mattarella',
+                                         host='127.0.0.1',
+                                         database='dbaggregationstrategies')
 
-                # prepare a cursor object using cursor() method
-                cursor = db.cursor()
+            # prepare a cursor object using cursor() method
+            cursor = db.cursor()
 
-                sql ="""SELECT * FROM user WHERE username = '%s'""" % (userN)
-                # sql = """SELECT * FROM user"""
-                try:
-                    # Execute the SQL command
-                    cursor.execute(sql)
-                    # Fetch all the rows in a list of lists.
-                    results = cursor.fetchall()
-                    for row in results:
-                        userI = row[0]
-                        name = row[1]
+            sql ="""SELECT * FROM user WHERE username = '%s'""" % (userN)
+            # sql = """SELECT * FROM user"""
+            try:
+                # Execute the SQL command
+                cursor.execute(sql)
+                # Fetch all the rows in a list of lists.
+                results = cursor.fetchall()
+                for row in results:
+                    userI = row[0]
+                    name = row[1]
 
-                    listUserID.append(userI)
-                    #listUsers.append(name)
-                    countUsers= countUsers+1
+                listUserID.append(userI)
+                #listUsers.append(name)
+                countUsers= countUsers+1
 
-                except:
-                    print("Error: unable to fetch data")
-                    listUserID.clear()
-                    listUsers.clear()
-                    db.close()
+            except:
+                print("Error: unable to fetch data")
+                listUserID.clear()
+                #listUsers.clear()
+                db.close()
 
-            db.close()
+        db.close()
 
             #check = True
 
 
         if(countUsers==len(data)):
-            commitGroup(listUserID, groupName)
+            commitGroup(listUserID, session['groupName'])
             #commit e registro gli utenti con voted 0
 
         # check in db
@@ -321,6 +326,25 @@ def search():
         #         db.close()
 
         array = list()
+        listPOI = list()
+        listCat = list()
+        listID = list()
+        listImages = list()
+        listDescriptions = list()
+        listSites = list()
+
+        with open("poi") as file:
+            listPOI = file.read().splitlines()
+        with open("cat") as file:
+            listCat = file.read().splitlines()
+        with open("id") as file:
+            listID = file.read().splitlines()
+        with open("imgs") as file:
+            listImages = file.read().splitlines()
+        with open("descriptions") as file:
+            listDescriptions = file.read().splitlines()
+        with open("site") as file:
+            listSites = file.read().splitlines()
 
         for i in range(len(listPOI)):
             d = dict()
@@ -338,10 +362,8 @@ def search():
         # user that created the group
         # return flask.render_template("ratings.html") # todo passare list poi e list cat
 
+
         return flask.render_template("ratings.html", data=dicto)
-
-
-
 
 
 
@@ -632,18 +654,18 @@ if __name__ == "__main__":
     # file.write('\n'.join(listImages))
     # file.close()
 
-    with open("poi") as file:
-        listPOI = file.read().splitlines()
-    with open("cat") as file:
-        listCat = file.read().splitlines()
-    with open("id") as file:
-        listID = file.read().splitlines()
-    with open("imgs") as file:
-        listImages = file.read().splitlines()
-    with open("descriptions") as file:
-        listDescriptions = file.read().splitlines()
-    with open("site") as file:
-        listSites = file.read().splitlines()
+    # with open("poi") as file:
+    #     listPOI = file.read().splitlines()
+    # with open("cat") as file:
+    #     listCat = file.read().splitlines()
+    # with open("id") as file:
+    #     listID = file.read().splitlines()
+    # with open("imgs") as file:
+    #     listImages = file.read().splitlines()
+    # with open("descriptions") as file:
+    #     listDescriptions = file.read().splitlines()
+    # with open("site") as file:
+    #     listSites = file.read().splitlines()
 
 
     app.run()
