@@ -123,19 +123,24 @@ def login():
                 #     print("Error username or password")
                 #     db.close()
 
-
-            checkGroups(userID)
+                infoGroups = checkGroups(userID)
         except:
             print("Error: unable to fecth data")
             print("Error username or password")
             db.close()
 
-    return flask.render_template("homeUser.html")
+    return flask.render_template("homeUser.html", infoGroups=json.dumps(infoGroups))
 
 @app.route("/logout")
 def logout():
     session.pop('userID', None)
     return flask.render_template("index.html")
+
+
+@app.route("/homeuser", methods=["GET"])
+def homeuser():
+    return flask.render_template("nameGroup.html")
+
 
 #The user gives the name of the group and the number of the members
 @app.route("/openAddUser", methods=["POST"])
@@ -605,7 +610,7 @@ def findGroupID(userID, groupName):
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
-    global groupID
+
     try:
         # Execute the SQL command
         # cursor.execute(sql)

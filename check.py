@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector, json
 
 #checking of color
 
@@ -6,6 +6,7 @@ def checkGroups(userID):
     db = mysql.connector.connect(user='mattarella', password='mattarella',
                                  host='127.0.0.1',
                                  database='dbaggregationstrategies')
+
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -24,6 +25,10 @@ def checkGroups(userID):
         cursor.execute(sql, (userID, userID))
         results = cursor.fetchall()
         numRows = len(results)
+
+        data={}
+        data['rows']= numRows
+        jsonData = json.dumps(numRows)
 
         if(numRows>0):
             for i in range(numRows):
@@ -45,15 +50,31 @@ def checkGroups(userID):
                 print("Remaining users: " + str(numRemaining))
                 if (vote == 1 and numRemaining != 0):
                     print("RED!")
+                    state="red"
                 if (vote == 0 and numRemaining != 0):
                     print("YELLOW!")
+                    state="yellow"
                 if (vote == 1 and numRemaining == 0):
                     print("GREEN!")
+                    state="green"
+
+                obj = {
+                    "nameGroup": nameGroup,"numTotal": numTotal ,"numRemaining": numRemaining, "state": state
+                }
+
+                jsonData.update(obj)
+
+
+
         else:
             print("NO GROUPS FOR YOU")
+            nameGroup = ["NO GROUPS FOR YOU"]
+            return nameGroup
 
         db.close()
     except:
-
+        nameGroup="NO GROUPS FOR YOU!"
         print("Error: unable to fecth data from CHECK")
         db.close()
+
+    return jsonData
