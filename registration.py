@@ -61,15 +61,13 @@ def signin():
 
         #sql = "INSERT INTO user(username, password) VALUES ('"+username+"', '"+password+"')"
 
-        firstname = data["firstname"]
-        lastname = data["lastname"]
         username = data["username"]
         password = data["password"]
         try:
            # Execute the SQL command
            #cursor.execute(sql)
 
-           cursor.execute("INSERT INTO user(firstname, lastname, username, password) VALUES (%s, %s, %s, %s)", (firstname, lastname, username, password))
+           cursor.execute("INSERT INTO user(username, password) VALUES (%s, %s)", (username, password))
            # Commit your changes in the database
            db.commit()
            print("User registered! ")
@@ -112,8 +110,7 @@ def login():
 
                 session.pop('userID',None)
                 userID = row[0]
-                name = row[3]
-                passw = row[4]
+                passw = row[2]
                 session['userID']=userID
                 # if (passw == password):
                 #     # Now print fetched result
@@ -135,7 +132,10 @@ def login():
 
     return flask.render_template("homeUser.html")
 
-
+@app.route("/logout")
+def logout():
+    session.pop('userID', None)
+    return flask.render_template("index.html")
 
 #The user gives the name of the group and the number of the members
 @app.route("/openAddUser", methods=["POST"])
@@ -498,7 +498,6 @@ def commitGroup(listUserID, groupName):
             #cursor.execute(sql)
 
             cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup, voted) VALUES (%s, %s, %s, %s)", (groupID,listUserID[i], groupName, 0))
-
             # Commit your changes in the database
             db.commit()
 
