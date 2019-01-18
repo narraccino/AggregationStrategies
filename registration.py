@@ -129,7 +129,7 @@ def login():
             print("Error username or password")
             db.close()
 
-    return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData))
+    return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID= session['userID'])
 
 @app.route("/logout")
 def logout():
@@ -196,7 +196,7 @@ def addRates():
 
         # userID=session['userID']
 
-        return flask.render_template("homeUser.html", user=session['userID'], jsonData=json.dumps(jsonData))
+        return flask.render_template("homeUser.html", userID=session['userID'], jsonData=json.dumps(jsonData))
 
 
 #RECOMMENDATION

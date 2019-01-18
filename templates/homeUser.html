@@ -10,11 +10,24 @@
     <script>
 
         var obj = JSON.parse('{{ jsonData | safe}}');
+        if(obj.numResults==0){
+            document.getElementById('identifi').innerHTML= "NO GROUPS FOR YOU!";
+        }
+        else {
+            var listGroups = '<ul>';
 
-        // document.getElementById('identifi').innerHTML= ob[0].numResults + " " + infoGroups[0].nameTotal + " " + infoGroups[0].numRemaining + " " + infoGroups[0].state;
-        document.getElementById('identifi').innerHTML= obj.infoGroups[0].nameGroup + " " + obj.infoGroups[0].nameTotal + " " + obj.infoGroups[0].numRemaining +" " + obj.infoGroups[0].state;
+            for(i=0; i<obj.numResults; i++)
+            {
+                listGroups+= '<li>'+ obj.infoGroups[i].nameGroup + " " + obj.infoGroups[i].nameTotal + " " + obj.infoGroups[i].numRemaining +" " + obj.infoGroups[i].state + '</li>';
+            }
+            listGroups += '</ul>';
+
+            document.getElementById('identifi').innerHTML= listGroups;
+        }
+
     </script>
 
 <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('homeuser') }}">Create a Group</a>
+<p>ID: {{userID}}</p>
 </body>
 </html>
