@@ -9,10 +9,10 @@
 <p id="identifi"></p>
     <script>
 
-        var infoGroups = JSON.parse('{{ jsonData | safe}}');
+        var obj = JSON.parse('{{ jsonData | safe}}');
 
-        document.getElementById('identifi').innerHTML= infoGroups.numResults;
-
+        // document.getElementById('identifi').innerHTML= ob[0].numResults + " " + infoGroups[0].nameTotal + " " + infoGroups[0].numRemaining + " " + infoGroups[0].state;
+        document.getElementById('identifi').innerHTML= obj.infoGroups[0].nameGroup + " " + obj.infoGroups[0].nameTotal + " " + obj.infoGroups[0].numRemaining +" " + obj.infoGroups[0].state;
     </script>
 
 <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('homeuser') }}">Create a Group</a>
