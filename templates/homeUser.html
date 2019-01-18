@@ -9,9 +9,9 @@
 <p id="identifi"></p>
     <script>
 
-        var obj = JSON.parse('{{ infoGroups | safe}}');
+        var obj = JSON.parse('{{ jsonData | safe}}');
 
-        document.getElementById('identifi').innerHTML= '{{ infoGroups | safe}}';
+        document.getElementById('identifi').innerHTML= '{{ jsonData | safe}}';
 
     </script>
 

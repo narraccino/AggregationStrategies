@@ -110,7 +110,7 @@ def login():
 
                 session.pop('userID',None)
                 userID = row[0]
-                passw = row[2]
+                # passw = row[2]
                 session['userID']=userID
                 # if (passw == password):
                 #     # Now print fetched result
@@ -123,13 +123,13 @@ def login():
                 #     print("Error username or password")
                 #     db.close()
 
-                infoGroups = checkGroups(userID)
+                jsonData = checkGroups(userID)
         except:
             print("Error: unable to fecth data")
             print("Error username or password")
             db.close()
 
-    return flask.render_template("homeUser.html", infoGroups=json.dumps(infoGroups))
+    return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData))
 
 @app.route("/logout")
 def logout():
@@ -192,11 +192,11 @@ def addRates():
         commitRate(groupID, session['userID'], listID, ratingsArray)
 
         #check if there are groups into DB
-        checkGroups(session['userID'])
+        jsonData =checkGroups(session['userID'])
 
         # userID=session['userID']
 
-        return flask.render_template("homeUser.html", user=session['userID'])
+        return flask.render_template("homeUser.html", user=session['userID'], jsonData=json.dumps(jsonData))
 
 
 #RECOMMENDATION

@@ -1,4 +1,4 @@
-import mysql.connector, json
+import mysql.connector, json, traceback
 
 #checking of color
 
@@ -26,9 +26,14 @@ def checkGroups(userID):
         results = cursor.fetchall()
         numRows = len(results)
 
-        data={}
-        data['rows']= numRows
-        jsonData = json.dumps(numRows)
+        data = {}
+        data['numResults']= numRows
+        data['infoGroups'] = []
+
+        # data={}
+        # data['rows']= numRows
+        # jsonData = json.dumps(numRows)
+        obj=""
 
         if(numRows>0):
             for i in range(numRows):
@@ -58,23 +63,24 @@ def checkGroups(userID):
                     print("GREEN!")
                     state="green"
 
-                obj = {
-                    "nameGroup": nameGroup,"numTotal": numTotal ,"numRemaining": numRemaining, "state": state
-                }
 
-                jsonData.update(obj)
-
+                data['infoGroups'].append({'nameGroup': nameGroup, 'nameTotal':str(numTotal), 'numRemaining': str(numRemaining), 'state':str(state)})
 
 
         else:
             print("NO GROUPS FOR YOU")
-            nameGroup = ["NO GROUPS FOR YOU"]
-            return nameGroup
+
+            return data
 
         db.close()
-    except:
+    except Exception:
+        traceback.print_exc()
         nameGroup="NO GROUPS FOR YOU!"
         print("Error: unable to fecth data from CHECK")
         db.close()
 
-    return jsonData
+    # with open('data.json', 'w') as outfile:
+    #     json.dump(data, outfile)
+    # print(json.dumps(data))
+
+    return data
