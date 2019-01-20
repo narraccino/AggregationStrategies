@@ -18,11 +18,28 @@
 
             for(i=0; i<obj.numResults; i++)
             {
-                listGroups+= '<li>'+ obj.infoGroups[i].nameGroup + " " + obj.infoGroups[i].nameTotal + " " + obj.infoGroups[i].numRemaining +" " + obj.infoGroups[i].state + '</li>';
+                // if(obj.infoGroups[i].state=="yellow")
+                // {
+                //     var collegam = "{{ url_for('search') }}";
+                // }
+
+                listGroups+= '<li>'+
+                    '<a href=' + '{{ url_for("search")}} ' +  'style="color:'+ obj.infoGroups[i].state + '">' + obj.infoGroups[i].nameGroup+ '</a>' +
+                     " " + "Total Users: " + obj.infoGroups[i].nameTotal + " " + "Remaining Users: "+  obj.infoGroups[i].numRemaining +" "  + '</li>';
+
+                // if(obj.infoGroups[i].state== "yellow")
+                // {
+                //    var btn = document.createElement("BUTTON");
+                //    var t= document.createTextNode("Click for Vote");
+                //     btn.appendChild(t);
+                //     document.body.appendChild(btn);
+                //
+                // }
             }
             listGroups += '</ul>';
 
             document.getElementById('identifi').innerHTML= listGroups;
+
         }
 
     </script>

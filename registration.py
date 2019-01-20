@@ -1,4 +1,4 @@
-import mysql.connector, flask, json,os
+import mysql.connector, flask, json,os, traceback
 from flask import g, session
 from clean import deletetables
 from random import randint
@@ -236,7 +236,7 @@ def addRates():
         #     return flask.render_template("recommendation.html", fairness=fairness_dict, least=least_dict)
 
 
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["POST", "GET"])
 def search():
 
 
@@ -244,21 +244,16 @@ def search():
 
     if flask.request.method == "POST":
         data = flask.request.form
-        # user_already_logged = listUserID[0]
+
         listUserID= list()
         listUserID.append(session['userID'])
 
-        #if not(check):
-
         data = list(data.values())
-
         data.remove('default')
 
         for i in range(0, len(data)):
 
             userN = data[i]
-
-            print(userN)
 
             db = mysql.connector.connect(user='mattarella', password='mattarella',
                                          host='127.0.0.1',
@@ -267,19 +262,18 @@ def search():
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
 
+            #i need to verify if the user exists
             sql ="""SELECT * FROM user WHERE username = '%s'""" % (userN)
-            # sql = """SELECT * FROM user"""
+
             try:
-                # Execute the SQL command
+
                 cursor.execute(sql)
-                # Fetch all the rows in a list of lists.
                 results = cursor.fetchall()
                 for row in results:
                     userI = row[0]
-                    name = row[1]
 
                 listUserID.append(userI)
-                #listUsers.append(name)
+
                 countUsers= countUsers+1
 
             except:
@@ -290,46 +284,13 @@ def search():
 
         db.close()
 
-            #check = True
+        # commit e registro gli utenti con voted 0
+        commitGroup(listUserID, session['groupName'])
 
 
-        if(countUsers==len(data)):
-            commitGroup(listUserID, session['groupName'])
-            #commit e registro gli utenti con voted 0
 
-        # check in db
-        # if index > 0:
-        #
-        #     db = mysql.connector.connect(user='mattarella', password='mattarella',
-        #                                  host='127.0.0.1',
-        #                                  database='dbaggregationstrategies')
-        #
-        #     # prepare a cursor object using cursor() method
-        #     cursor = db.cursor()
-        #
-        #     username = data["name"]
-        #     password = data["password"]
-        #
-        #     sql = """SELECT * FROM user WHERE username = '%s'""" % (username)
-        #
-        #     try:
-        #         # Execute the SQL command
-        #         cursor.execute(sql)
-        #         # Fetch all the rows in a list of lists.
-        #         results = cursor.fetchall()
-        #         for row in results:
-        #             userID = row[0]
-        #             name = row[1]
-        #             passw = row[2]
-        #
-        #             if not(passw == password):
-        #                 print("Error username or password")
-        #                 db.close()
-        #
-        #     except:
-        #         print("Error: unable to fecth data")
-        #         db.close()
 
+#Sending to ratings.html  informations of POI
         array = list()
         listPOI = list()
         listCat = list()
@@ -364,126 +325,48 @@ def search():
 
         dicto = {"dict": array}
 
-        # user that created the group
-        # return flask.render_template("ratings.html") # todo passare list poi e list cat
 
 
         return flask.render_template("ratings.html", data=dicto)
 
+    else:
+        array = list()
+        listPOI = list()
+        listCat = list()
+        listID = list()
+        listImages = list()
+        listDescriptions = list()
+        listSites = list()
+
+        with open("poi") as file:
+            listPOI = file.read().splitlines()
+        with open("cat") as file:
+            listCat = file.read().splitlines()
+        with open("id") as file:
+            listID = file.read().splitlines()
+        with open("imgs") as file:
+            listImages = file.read().splitlines()
+        with open("descriptions") as file:
+            listDescriptions = file.read().splitlines()
+        with open("site") as file:
+            listSites = file.read().splitlines()
+
+        for i in range(len(listPOI)):
+            d = dict()
+            d['poi'] = listPOI[i]
+            d['cat'] = listCat[i]
+            d['id'] = listID[i]
+            d['image'] = listImages[i]
+            d['description'] = listDescriptions[i]
+            d['sito'] = listSites[i]
+
+            array.append(d)
+
+        dicto = {"dict": array}
 
 
-#Ratings
-# @app.route("/search", methods=["POST"])
-# def search():
-#
-#     global check, userID
-#     countUsers=0
-#
-#     if flask.request.method == "POST":
-#         data = flask.request.form
-#         # user_already_logged = listUserID[0]
-#
-#         if not(check):
-#
-#             data = list(data.values())
-#
-#             data.remove('default')
-#
-#             for i in range(0, len(data)):
-#
-#                 userN = data[i]
-#
-#                 print(userN)
-#
-#                 db = mysql.connector.connect(user='mattarella', password='mattarella',
-#                                              host='127.0.0.1',
-#                                              database='dbaggregationstrategies')
-#
-#                 # prepare a cursor object using cursor() method
-#                 cursor = db.cursor()
-#
-#                 sql ="""SELECT * FROM user WHERE username = '%s'""" % (userN)
-#                 # sql = """SELECT * FROM user"""
-#                 try:
-#                     # Execute the SQL command
-#                     cursor.execute(sql)
-#                     # Fetch all the rows in a list of lists.
-#                     results = cursor.fetchall()
-#                     for row in results:
-#                         userID = row[0]
-#                         name = row[1]
-#
-#                     listUserID.append(userID)
-#                     listUsers.append(name)
-#                     countUsers= countUsers+1
-#
-#                 except:
-#                     print("Error: unable to fetch data")
-#                     listUserID.clear()
-#                     listUsers.clear()
-#                     db.close()
-#
-#             db.close()
-#
-#             check = True
-#
-#
-#         if(countUsers==len(data)):
-#             commitGroup(listUserID, groupName)
-#             #commit e registro gli utenti con voted 0
-#
-#         # check in db
-#         # if index > 0:
-#         #
-#         #     db = mysql.connector.connect(user='mattarella', password='mattarella',
-#         #                                  host='127.0.0.1',
-#         #                                  database='dbaggregationstrategies')
-#         #
-#         #     # prepare a cursor object using cursor() method
-#         #     cursor = db.cursor()
-#         #
-#         #     username = data["name"]
-#         #     password = data["password"]
-#         #
-#         #     sql = """SELECT * FROM user WHERE username = '%s'""" % (username)
-#         #
-#         #     try:
-#         #         # Execute the SQL command
-#         #         cursor.execute(sql)
-#         #         # Fetch all the rows in a list of lists.
-#         #         results = cursor.fetchall()
-#         #         for row in results:
-#         #             userID = row[0]
-#         #             name = row[1]
-#         #             passw = row[2]
-#         #
-#         #             if not(passw == password):
-#         #                 print("Error username or password")
-#         #                 db.close()
-#         #
-#         #     except:
-#         #         print("Error: unable to fecth data")
-#         #         db.close()
-#
-#         array = list()
-#
-#         for i in range(len(listPOI)):
-#             d = dict()
-#             d['poi'] = listPOI[i]
-#             d['cat'] = listCat[i]
-#             d['id'] = listID[i]
-#             d['image'] = listImages[i]
-#             d['description'] = listDescriptions[i]
-#             d['sito'] = listSites[i]
-#
-#             array.append(d)
-#
-#         dicto = {"dict": array}
-#
-#         # user that created the group
-#         # return flask.render_template("ratings.html") # todo passare list poi e list cat
-#
-#         return flask.render_template("ratings.html", data=dicto)
+        return flask.render_template("ratings.html", data=dicto)
+
 
 
 #commit of groupname and userID of that group
@@ -512,15 +395,9 @@ def commitGroup(listUserID, groupName):
             db.rollback()
             print("Transaction group refused")
 
-
-
-
-    # disconnect from server
     db.close()
 
-    # print("%d. %s appears %d times." % (i, key, wordBank[key]))
 
-    #return groupID
 
 
 #commit of list ID and listPOI
@@ -579,8 +456,8 @@ def commitRate(groupID,userID, listIDPOI, ratingsArray):
             # Commit your changes in the database
             db.commit()
             print("POI registered! ")
-        except:
-            # Rollback in case there is any error
+        except Exception:
+            traceback.print_exc()
             db.rollback()
             print("Transaction POI refused2")
 

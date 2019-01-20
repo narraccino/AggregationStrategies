@@ -79,8 +79,8 @@ def checkGroups(userID):
         print("Error: unable to fecth data from CHECK")
         db.close()
 
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
-    print(json.dumps(data))
+    # with open('data.json', 'w') as outfile:
+    #     json.dump(data, outfile)
+    # print(json.dumps(data))
 
     return data
