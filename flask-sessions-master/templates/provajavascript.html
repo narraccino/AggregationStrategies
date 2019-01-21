@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="identifi"></p>
+    <script>
+
+        var saluto = "ciaone";
+
+
+        var obj= "<a href={{ url_for('search', share='ADDSHARE2') }}".replace("ADDSHARE2", saluto) +">Click</a>";
+
+
+        document.getElementById('identifi').innerHTML= obj;
+
+    </script>
+
+</body>
+</html>
