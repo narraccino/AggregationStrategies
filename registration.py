@@ -245,11 +245,17 @@ def search():
 
     countUsers=0
 
+
     if flask.request.method == "POST":
         data = flask.request.form
 
         listUserID= list()
         listUserID.append(session['userID'])
+
+        #data = flask.request.args
+        # data = data.to_dict(flat=False)
+        print(data)
+
 
         data = list(data.values())
         data.remove('default')
@@ -285,7 +291,7 @@ def search():
                 #listUsers.clear()
                 db.close()
 
-        db.close()
+            db.close()
 
         # commit e registro gli utenti con voted 0
         commitGroup(listUserID, session['groupName'])
@@ -296,83 +302,49 @@ def search():
 
     return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID=session['userID'])
 
+@app.route("/rates", methods=["GET"])
+def rates():
+        data = flask.request.args
+        data = data.to_dict(flat=False)
+        session['groupName']=data['share'][0]
+        array = list()
+        listPOI = list()
+        listCat = list()
+        listID = list()
+        listImages = list()
+        listDescriptions = list()
+        listSites = list()
 
-#Sending to ratings.html  informations of POI
-        # array = list()
-        # listPOI = list()
-        # listCat = list()
-        # listID = list()
-        # listImages = list()
-        # listDescriptions = list()
-        # listSites = list()
-        #
-        # with open("poi") as file:
-        #     listPOI = file.read().splitlines()
-        # with open("cat") as file:
-        #     listCat = file.read().splitlines()
-        # with open("id") as file:
-        #     listID = file.read().splitlines()
-        # with open("imgs") as file:
-        #     listImages = file.read().splitlines()
-        # with open("descriptions") as file:
-        #     listDescriptions = file.read().splitlines()
-        # with open("site") as file:
-        #     listSites = file.read().splitlines()
-        #
-        # for i in range(len(listPOI)):
-        #     d = dict()
-        #     d['poi'] = listPOI[i]
-        #     d['cat'] = listCat[i]
-        #     d['id'] = listID[i]
-        #     d['image'] = listImages[i]
-        #     d['description'] = listDescriptions[i]
-        #     d['sito'] = listSites[i]
-        #
-        #     array.append(d)
-        #
-        # dicto = {"dict": array}
-        #
-        #
-        #
-        # return flask.render_template("ratings.html", data=dicto)
+        with open("poi") as file:
+            listPOI = file.read().splitlines()
+        with open("cat") as file:
+            listCat = file.read().splitlines()
+        with open("id") as file:
+            listID = file.read().splitlines()
+        with open("imgs") as file:
+            listImages = file.read().splitlines()
+        with open("descriptions") as file:
+            listDescriptions = file.read().splitlines()
+        with open("site") as file:
+            listSites = file.read().splitlines()
 
-    # else:
-    #     array = list()
-    #     listPOI = list()
-    #     listCat = list()
-    #     listID = list()
-    #     listImages = list()
-    #     listDescriptions = list()
-    #     listSites = list()
-    #
-    #     with open("poi") as file:
-    #         listPOI = file.read().splitlines()
-    #     with open("cat") as file:
-    #         listCat = file.read().splitlines()
-    #     with open("id") as file:
-    #         listID = file.read().splitlines()
-    #     with open("imgs") as file:
-    #         listImages = file.read().splitlines()
-    #     with open("descriptions") as file:
-    #         listDescriptions = file.read().splitlines()
-    #     with open("site") as file:
-    #         listSites = file.read().splitlines()
-    #
-    #     for i in range(len(listPOI)):
-    #         d = dict()
-    #         d['poi'] = listPOI[i]
-    #         d['cat'] = listCat[i]
-    #         d['id'] = listID[i]
-    #         d['image'] = listImages[i]
-    #         d['description'] = listDescriptions[i]
-    #         d['sito'] = listSites[i]
-    #
-    #         array.append(d)
-    #
-    #     dicto = {"dict": array}
-    #
-    #
-    #     return flask.render_template("ratings.html", data=dicto)
+        for i in range(len(listPOI)):
+            d = dict()
+            d['poi'] = listPOI[i]
+            d['cat'] = listCat[i]
+            d['id'] = listID[i]
+            d['image'] = listImages[i]
+            d['description'] = listDescriptions[i]
+            d['sito'] = listSites[i]
+
+            array.append(d)
+
+        dicto = {"dict": array}
+
+
+
+        return flask.render_template("ratings.html", data=dicto)
+
 
 
 
