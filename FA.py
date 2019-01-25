@@ -124,6 +124,6 @@ def FairenessAverage(ratingsArraylist, list_POI, list_Names):
                         if (letter not in ultimate):
                             ultimate.append(letter)
 
-    print(ultimate)
+    #print(ultimate)
 
     return ultimate

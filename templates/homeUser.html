@@ -20,7 +20,7 @@
             {
 
                 listGroups+= '<li>'+
-                    '<a href=' + '{{ url_for("rates", share="variable")}}'.replace("variable", obj.infoGroups[i].nameGroup) +  ' style="color:'+ obj.infoGroups[i].state + '">' + obj.infoGroups[i].nameGroup+ '</a>' +
+                    '<a href=' + '{{ url_for("rates", share="variable", color="colore")}}'.replace("variable", obj.infoGroups[i].nameGroup).replace("colore", obj.infoGroups[i].state) +  ' style="color:'+ obj.infoGroups[i].state + '">' + obj.infoGroups[i].nameGroup+ '</a>' +
                      " " + "Total Users: " + obj.infoGroups[i].nameTotal + " " + "Remaining Users: "+  obj.infoGroups[i].numRemaining +" "  + '</li>';
 
 

@@ -3,8 +3,7 @@ from flask import g, session
 from clean import deletetables
 from random import randint
 from check import checkGroups
-from FA import FairenessAverage
-from LMW import LeastMostWithout
+from recommendation import recommendation
 import numpy as np
 
 
@@ -171,9 +170,6 @@ def addRates():
         ratingsArray = [int(e['rating']) for e in array]
         #ratingsArraylists.append(ratingsArray)
 
-        # global index
-        #
-        # index += 1
 
 
         listPOI = list()
@@ -201,42 +197,6 @@ def addRates():
 
         return flask.render_template("homeUser.html", userID=session['userID'], jsonData=json.dumps(jsonData))
 
-
-#RECOMMENDATION
-        # if not(index == (len(listUserID))):
-        #
-        #     return flask.render_template("otherUsersLogin.html", user=listUsers[index])
-        #
-        # else:
-        #
-        #     # we convert the ratingsArrayLists in array
-        #     ratingsArrayPOI = np.array(ratingsArraylists)
-        #     print(ratingsArrayPOI)
-        #
-        #     # fairenessAverage algorithm
-        #     final_listA = FairenessAverage(ratingsArrayPOI, listPOI, listUsers)
-        #     print("The ordered list with FairenessAverage is this:")
-        #     for i in range(0, len(listPOI)):
-        #         print(i + 1, '.', final_listA[i])
-        #
-        #     print('\n\n')
-        #
-        #     # LeastMostWithout algorithm
-        #     final_listB, len_POIModified = LeastMostWithout(ratingsArrayPOI, listPOI, listUsers)
-        #     print("The ordered list with LeastMostWithout is this:")
-        #     for i in range(0, len_POIModified):
-        #         print(i + 1, '.', final_listB[i])
-        #
-        #     groupID = commitGroup(listUserID, groupName)
-        #     commitPOI(listID, listPOI)
-        #     commitRate(groupID, listUserID, listID, ratingsArrayPOI)
-        #     index = 0
-        #
-        #     fairness_dict = {"fairness": final_listA}
-        #
-        #     least_dict = {"least": final_listB}
-        #
-        #     return flask.render_template("recommendation.html", fairness=fairness_dict, least=least_dict)
 
 
 @app.route("/search", methods=["POST"])
@@ -307,43 +267,88 @@ def rates():
         data = flask.request.args
         data = data.to_dict(flat=False)
         session['groupName']=data['share'][0]
-        array = list()
-        listPOI = list()
-        listCat = list()
-        listID = list()
-        listImages = list()
-        listDescriptions = list()
-        listSites = list()
+        session['color']= data['color'][0]
 
-        with open("poi") as file:
-            listPOI = file.read().splitlines()
-        with open("cat") as file:
-            listCat = file.read().splitlines()
-        with open("id") as file:
-            listID = file.read().splitlines()
-        with open("imgs") as file:
-            listImages = file.read().splitlines()
-        with open("descriptions") as file:
-            listDescriptions = file.read().splitlines()
-        with open("site") as file:
-            listSites = file.read().splitlines()
+        if (session['color'] == 'red'):
+            jsonData = checkGroups(session['userID'])
 
-        for i in range(len(listPOI)):
-            d = dict()
-            d['poi'] = listPOI[i]
-            d['cat'] = listCat[i]
-            d['id'] = listID[i]
-            d['image'] = listImages[i]
-            d['description'] = listDescriptions[i]
-            d['sito'] = listSites[i]
+            return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID=session['userID'])
 
-            array.append(d)
+        if(session['color']== 'yellow'):
+            array = list()
+            listPOI = list()
+            listCat = list()
+            listID = list()
+            listImages = list()
+            listDescriptions = list()
+            listSites = list()
 
-        dicto = {"dict": array}
+            with open("poi") as file:
+                listPOI = file.read().splitlines()
+            with open("cat") as file:
+                listCat = file.read().splitlines()
+            with open("id") as file:
+                listID = file.read().splitlines()
+            with open("imgs") as file:
+                listImages = file.read().splitlines()
+            with open("descriptions") as file:
+                listDescriptions = file.read().splitlines()
+            with open("site") as file:
+                listSites = file.read().splitlines()
+
+            for i in range(len(listPOI)):
+                d = dict()
+                d['poi'] = listPOI[i]
+                d['cat'] = listCat[i]
+                d['id'] = listID[i]
+                d['image'] = listImages[i]
+                d['description'] = listDescriptions[i]
+                d['sito'] = listSites[i]
+
+                array.append(d)
+            dicto = {"dict": array}
+
+            return flask.render_template("ratings.html", data=dicto)
+
+        if(session['color']== 'green'):
+            recommendation()
 
 
-
-        return flask.render_template("ratings.html", data=dicto)
+# RECOMMENDATION
+# if not(index == (len(listUserID))):
+#
+#     return flask.render_template("otherUsersLogin.html", user=listUsers[index])
+#
+# else:
+#
+#     # we convert the ratingsArrayLists in array
+#     ratingsArrayPOI = np.array(ratingsArraylists)
+#     print(ratingsArrayPOI)
+#
+#     # fairenessAverage algorithm
+#     final_listA = FairenessAverage(ratingsArrayPOI, listPOI, listUsers)
+#     print("The ordered list with FairenessAverage is this:")
+#     for i in range(0, len(listPOI)):
+#         print(i + 1, '.', final_listA[i])
+#
+#     print('\n\n')
+#
+#     # LeastMostWithout algorithm
+#     final_listB, len_POIModified = LeastMostWithout(ratingsArrayPOI, listPOI, listUsers)
+#     print("The ordered list with LeastMostWithout is this:")
+#     for i in range(0, len_POIModified):
+#         print(i + 1, '.', final_listB[i])
+#
+#     groupID = commitGroup(listUserID, groupName)
+#     commitPOI(listID, listPOI)
+#     commitRate(groupID, listUserID, listID, ratingsArrayPOI)
+#     index = 0
+#
+#     fairness_dict = {"fairness": final_listA}
+#
+#     least_dict = {"least": final_listB}
+#
+#     return flask.render_template("recommendation.html", fairness=fairness_dict, least=least_dict)
 
 
 
@@ -375,8 +380,6 @@ def commitGroup(listUserID, groupName):
             print("Transaction group refused")
 
     db.close()
-
-
 
 
 #commit of list ID and listPOI
@@ -458,7 +461,6 @@ def commitRate(groupID,userID, listIDPOI, ratingsArray):
     db.close()
 
 
-
 def findGroupID(userID, groupName):
     db = mysql.connector.connect(user='mattarella', password='mattarella',
                                  host='127.0.0.1',
@@ -489,8 +491,8 @@ def findGroupID(userID, groupName):
     db.close()
     return groupID
 
-
-
+def recommendation():
+    x=1
 
 if __name__ == "__main__":
     print("Loading Group Recommender System")
