@@ -15,6 +15,7 @@ def deletetables():
            cursor.execute("DELETE FROM groupusers")
            cursor.execute("DELETE FROM poi")
            cursor.execute("DELETE FROM ratings")
+           cursor.execute("DELETE FROM results")
            # Commit your changes in the database
            db.commit()
            print("DELETED ALL TABLES! ")

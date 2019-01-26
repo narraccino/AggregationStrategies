@@ -311,45 +311,12 @@ def rates():
             return flask.render_template("ratings.html", data=dicto)
 
         if(session['color']== 'green'):
-            recommendation()
 
-
-# RECOMMENDATION
-# if not(index == (len(listUserID))):
-#
-#     return flask.render_template("otherUsersLogin.html", user=listUsers[index])
-#
-# else:
-#
-#     # we convert the ratingsArrayLists in array
-#     ratingsArrayPOI = np.array(ratingsArraylists)
-#     print(ratingsArrayPOI)
-#
-#     # fairenessAverage algorithm
-#     final_listA = FairenessAverage(ratingsArrayPOI, listPOI, listUsers)
-#     print("The ordered list with FairenessAverage is this:")
-#     for i in range(0, len(listPOI)):
-#         print(i + 1, '.', final_listA[i])
-#
-#     print('\n\n')
-#
-#     # LeastMostWithout algorithm
-#     final_listB, len_POIModified = LeastMostWithout(ratingsArrayPOI, listPOI, listUsers)
-#     print("The ordered list with LeastMostWithout is this:")
-#     for i in range(0, len_POIModified):
-#         print(i + 1, '.', final_listB[i])
-#
-#     groupID = commitGroup(listUserID, groupName)
-#     commitPOI(listID, listPOI)
-#     commitRate(groupID, listUserID, listID, ratingsArrayPOI)
-#     index = 0
-#
-#     fairness_dict = {"fairness": final_listA}
-#
-#     least_dict = {"least": final_listB}
-#
-#     return flask.render_template("recommendation.html", fairness=fairness_dict, least=least_dict)
-
+            groupID = findGroupID(session['userID'], session['groupName'])
+            lmw, fa = recommendation(groupID)
+            print(lmw)
+            print(fa)
+            return flask.render_template("recommendation.html", lmw=lmw , fa=fa )
 
 
 
@@ -491,43 +458,11 @@ def findGroupID(userID, groupName):
     db.close()
     return groupID
 
-def recommendation():
-    x=1
+
 
 if __name__ == "__main__":
     print("Loading Group Recommender System")
 
-    # [listPOI, listCat, listID, listImages] = topResults()
-    #
-    #
-    # file = open("poi", 'w')
-    # file.write('\n'.join(listPOI))
-    # file.close()
-    #
-    # file = open("cat", 'w')
-    # file.write('\n'.join(listCat))
-    # file.close()
-    #
-    # file = open("id", 'w')
-    # file.write('\n'.join(listID))
-    # file.close()
-    #
-    # file = open("imgs", 'w')
-    # file.write('\n'.join(listImages))
-    # file.close()
-
-    # with open("poi") as file:
-    #     listPOI = file.read().splitlines()
-    # with open("cat") as file:
-    #     listCat = file.read().splitlines()
-    # with open("id") as file:
-    #     listID = file.read().splitlines()
-    # with open("imgs") as file:
-    #     listImages = file.read().splitlines()
-    # with open("descriptions") as file:
-    #     listDescriptions = file.read().splitlines()
-    # with open("site") as file:
-    #     listSites = file.read().splitlines()
 
 
     app.run()

@@ -20,31 +20,60 @@
 
     <div id="fairness-container">
 
-        <p class="fairness" id="fairness-title">The ordered list with FairenessAverage is this:</p>
-        <ol id="fairness-list">
+        <p id="fairness">The ordered list with FairenessAverage is this:</p>
 
-        </ol>
 
     </div>
 
     <div id="least-container">
 
-        <p class="least" id="least-title">The ordered list with LeastMostWithout is this:</p>
+        <p id="least">The ordered list with LeastMostWithout is this:</p>
 
-        <ol id="least-list">
 
-        </ol>
 
     </div>
 
+    <p id="identifi"></p>
+    <p id="identifi2"></p>
+
 
     <script>
-        var fairness = '{{ fairness|tojson|safe }}';
-        fairness = JSON.parse(fairness);
-        var least = '{{ least|tojson|safe }}';
-        least = JSON.parse(least);
-        pop_rec(fairness, least);
+
+        var far = '{{ fa | tojson | safe }}';
+        var lm = '{{ lmw | tojson | safe }}';
+        var fa = JSON.parse(far);
+        var lmw = JSON.parse(lm);
+
+
+          var listFairness = '<ol>';
+
+            for(i=0; i< fa.length; i++)
+            {
+
+                listFairness+= '<li>'+ fa[i] + '</li>';
+
+
+            }
+            listFairness += '</ol>';
+
+
+        var listLMW = '<ol>';
+
+        for(i=0; i< lmw.length; i++)
+        {
+
+            listLMW+= '<li>'+ lmw[i] + '</li>';
+
+
+        }
+        listLMW += '</ol>';
+
+        document.getElementById("fairness-container").innerHTML= listFairness;
+        document.getElementById("least-container").innerHTML= listLMW;
+
+
     </script>
+
 
 </div>
 </body>

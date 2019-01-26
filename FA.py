@@ -75,8 +75,8 @@ def FairenessAverage(ratingsArraylist, list_POI, list_Names):
         # aggiungo per ogni iterazione(0-users_number le proprie liste finali ordinate)
         final_list.append(final_list2)
 
-    print(final_list)
-    print("\n")
+    # print(final_list)
+    # print("\n")
 
     # creo la lista vuota ultimate che sarà quella definitiva
     ultimate = list()
