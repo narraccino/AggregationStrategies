@@ -84,3 +84,23 @@ def checkGroups(userID):
     # print(json.dumps(data))
 
     return data
+
+def checkCompleted(groupID):
+    db = mysql.connector.connect(user='mattarella', password='mattarella',
+                                 host='127.0.0.1',
+                                 database='dbaggregationstrategies')
+
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+    try:
+
+        cursor.execute("SELECT completed FROM stategroupalgorithm WHERE group_ID = %s AND algorithm_ID = 1", (groupID,))
+        fairness = cursor.fetchone()
+        cursor.execute("SELECT completed FROM stategroupalgorithm WHERE group_ID = %s AND algorithm_ID = 2", (groupID,))
+        lessMostWithout = cursor.fetchone()
+        db.close()
+    except:
+        traceback.print_exc()
+        db.close()
+
+    return bool(fairness), bool(lessMostWithout)

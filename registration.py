@@ -2,8 +2,8 @@ import mysql.connector, flask, json,os, traceback
 from flask import g, session
 from clean import deletetables
 from random import randint
-from check import checkGroups
-from recommendation import recommendation
+from check import checkGroups, checkCompleted
+from recommendation import recommendation, viewList
 import numpy as np
 
 
@@ -16,7 +16,7 @@ import numpy as np
 
 
 #svuoto le tabelle
-deletetables()
+# deletetables()
 
 app = flask.Flask(__name__)
 app.secret_key= os.urandom(24)
@@ -313,11 +313,15 @@ def rates():
         if(session['color']== 'green'):
 
             groupID = findGroupID(session['userID'], session['groupName'])
-            lmw, fa = recommendation(groupID)
-            print(lmw)
-            print(fa)
-            return flask.render_template("recommendation.html", lmw=lmw , fa=fa )
+            fa_state, less_state = checkCompleted(groupID)
 
+            if(not fa_state and not less_state):
+                lmw, fa = viewList(groupID)
+                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
+            else:
+                recommendation(groupID)
+                lmw, fa = viewList(groupID)
+                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
 
 
 #commit of groupname and userID of that group
@@ -340,11 +344,17 @@ def commitGroup(listUserID, groupName):
             # Commit your changes in the database
             db.commit()
 
+
             print("Group registered! ")
         except:
             # Rollback in case there is any error
             db.rollback()
             print("Transaction group refused")
+
+    cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 1, 0))
+    db.commit()
+    cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 2, 0))
+    db.commit()
 
     db.close()
 
