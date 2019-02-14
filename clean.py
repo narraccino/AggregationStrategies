@@ -13,7 +13,6 @@ def deletetables():
            #cursor.execute(sql)
 
            cursor.execute("DELETE FROM groupusers")
-           cursor.execute("DELETE FROM poi")
            cursor.execute("DELETE FROM ratings")
            cursor.execute("DELETE FROM results")
            # Commit your changes in the database

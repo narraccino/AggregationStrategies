@@ -4,10 +4,10 @@ from clean import deletetables
 from random import randint
 from check import checkGroups, checkCompleted
 from recommendation import recommendation, viewList
-
+from semauto import semauto
 
 #svuoto le tabelle
-deletetables()
+#deletetables()
 
 app = flask.Flask(__name__)
 app.secret_key= os.urandom(24)
@@ -118,8 +118,10 @@ def signin():
             return flask.render_template('error.html')
 
 #Method usd to check if the informations given by a user are into the DB
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
+
+
     if flask.request.method == "POST":
         data = flask.request.form
 
@@ -163,7 +165,13 @@ def login():
             print("Error username or password")
             db.close()
 
-    return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID= session['userID'])
+        return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID= session['userID'])
+
+    if flask.request.method == "GET":
+
+        jsonData = checkGroups(session['userID'])
+
+        return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID= session['userID'])
 
 @app.route("/logout")
 def logout():
@@ -248,9 +256,9 @@ def addInitRates():
         with open("id") as file:
             listID = file.read().splitlines()
 
-        commitPOI(listID, listPOI)
+        #commitPOI(listID, listPOI)
 
-        commitInitRate(session['userID'],listID, ratingsArray)
+        commitInitRate(ratingsArray)
 
         jsonData =checkGroups(session['userID'])
 
@@ -371,16 +379,21 @@ def rates():
 
         if(session['color']== 'green'):
 
-            groupID = findGroupID(session['userID'], session['groupName'])
-            fa_state, less_state = checkCompleted(groupID)
 
-            if(not fa_state and not less_state):
-                lmw, fa = viewList(groupID)
-                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
-            else:
-                recommendation(groupID)
-                lmw, fa = viewList(groupID)
-                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
+            groupID = findGroupID(session['userID'], session['groupName'])
+
+            up =semauto()
+            print(up)
+
+            # #AGGREGATION STRATEGIES
+            # fa_state, less_state = checkCompleted(groupID)
+            # if(fa_state and less_state):
+            #     lmw, fa = viewList(groupID)
+            #     return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
+            # else:
+            #     recommendation(groupID)
+            #     lmw, fa = viewList(groupID)
+            #     return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
 
 #commit of groupname and userID of that group
 def commitGroup(listUserID, groupName):
@@ -561,6 +574,26 @@ def commitInitRate(userID, listIDPOI, ratingsArray):
     #     db.rollback()
     #     print("Transaction voted refused")
 
+
+    db.close()
+
+def createPOIUser():
+
+    db = mysql.connector.connect(user='mattarella', password='mattarella',
+                                 host='127.0.0.1',
+                                 database='dbaggregationstrategies')
+
+
+    cursor = db.cursor()
+
+    try:
+        cursor.execute("SELECT ID_poi FROM poi ORDER BY RAND() LIMIT 10")
+        result= cursor.fetchall()
+
+
+
+    except:
+        traceback.print_exc()
 
     db.close()
 
