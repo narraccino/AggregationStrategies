@@ -33,7 +33,9 @@
     <script src="{{ url_for('static',filename='ratings.js') }}"></script>
 
     <script>
+        console.log("paitoooon");
         var data = '{{ data|tojson|safe }}';
+        console.log(typeof(data));
         data = JSON.parse(data);
         populate(data);
     </script>

@@ -1,13 +1,15 @@
-import mysql.connector, flask, json,os, traceback
+import mysql.connector, flask, json,os, traceback, time
 from flask import g, session
 from clean import deletetables
 from random import randint
 from check import checkGroups, checkCompleted
 from recommendation import recommendation, viewList
 from semauto import semauto
+from POIFactory import createPOIUser, getSPARQLDescription
+
 
 #svuoto le tabelle
-#deletetables()
+deletetables()
 
 app = flask.Flask(__name__)
 app.secret_key= os.urandom(24)
@@ -49,8 +51,6 @@ def signin():
         username = data["username"]
         password = data["password"]
         try:
-           # Execute the SQL command
-           #cursor.execute(sql)
 
            cursor.execute("INSERT INTO user(username, password) VALUES (%s, %s)", (username, password))
            # Commit your changes in the database
@@ -74,45 +74,19 @@ def signin():
                traceback.print_exc()
 
            db.close()
+           dicto = createPOIUser()
 
-           array = list()
-           listPOI = list()
-           listCat = list()
-           listID = list()
-           listImages = list()
-           listDescriptions = list()
-           listSites = list()
+           # r= json.dumps(dicto)
+           # with open('infoPOI.json', 'w') as file:
+           #  json.dump(r, file)
 
-           with open("poi") as file:
-               listPOI = file.read().splitlines()
-           with open("cat") as file:
-               listCat = file.read().splitlines()
-           with open("id") as file:
-               listID = file.read().splitlines()
-           with open("imgs") as file:
-               listImages = file.read().splitlines()
-           with open("descriptions") as file:
-               listDescriptions = file.read().splitlines()
-           with open("site") as file:
-               listSites = file.read().splitlines()
-
-           for i in range(len(listPOI)):
-               d = dict()
-               d['poi'] = listPOI[i]
-               d['cat'] = listCat[i]
-               d['id'] = listID[i]
-               d['image'] = listImages[i]
-               d['description'] = listDescriptions[i]
-               d['sito'] = listSites[i]
-
-               array.append(d)
-               dicto = {"dict": array}
+           return flask.render_template("initRatings.html", data=json.dumps(dicto))
 
 
-           return flask.render_template("initRatings.html",  data=dicto)
 
         except:
             # Rollback in case there is any error
+            traceback.print_exc()
             print("Transaction refused")
             db.close()
             return flask.render_template('error.html')
@@ -160,6 +134,7 @@ def login():
                 #     db.close()
 
                 jsonData = checkGroups(userID)
+                time.sleep(3)
         except:
             print("Error: unable to fecth data")
             print("Error username or password")
@@ -243,22 +218,23 @@ def addInitRates():
         data = data.to_dict(flat=False)
         dicto = json.loads(list(data.keys())[0])
         array = dicto["dict"]
+        listIDPOI = [str(e['poi']) for e in array]
         ratingsArray = [int(e['rating']) for e in array]
         #ratingsArraylists.append(ratingsArray)
 
 
-        listPOI= list()
-        listID= list()
-
-
-        with open("poi") as file:
-            listPOI = file.read().splitlines()
-        with open("id") as file:
-            listID = file.read().splitlines()
+        # listPOI= list()
+        # listID= list()
+        #
+        #
+        # with open("poi") as file:
+        #     listPOI = file.read().splitlines()
+        # with open("id") as file:
+        #     listID = file.read().splitlines()
 
         #commitPOI(listID, listPOI)
 
-        commitInitRate(ratingsArray)
+        commitInitRate(listIDPOI, ratingsArray)
 
         jsonData =checkGroups(session['userID'])
 
@@ -536,7 +512,7 @@ def findGroupID(userID, groupName):
     db.close()
     return groupID
 
-def commitInitRate(userID, listIDPOI, ratingsArray):
+def commitInitRate(listIDPOI, ratingsArray):
     db = mysql.connector.connect(user='mattarella', password='mattarella',
                                  host='127.0.0.1',
                                  database='dbaggregationstrategies')
@@ -550,7 +526,7 @@ def commitInitRate(userID, listIDPOI, ratingsArray):
             # Execute the SQL command
             # cursor.execute(sql)
 
-            cursor.execute("INSERT INTO init_ratings(ID_user, POI_ID,rating) VALUES (%s, %s, %s)",(userID, listIDPOI[j], ratingsArray[j]))
+            cursor.execute("INSERT INTO init_ratings(ID_user, POI_ID,rating) VALUES (%s, %s, %s)",(session['userID'], listIDPOI[j], ratingsArray[j]))
 
             # Commit your changes in the database
             db.commit()
@@ -577,25 +553,6 @@ def commitInitRate(userID, listIDPOI, ratingsArray):
 
     db.close()
 
-def createPOIUser():
-
-    db = mysql.connector.connect(user='mattarella', password='mattarella',
-                                 host='127.0.0.1',
-                                 database='dbaggregationstrategies')
-
-
-    cursor = db.cursor()
-
-    try:
-        cursor.execute("SELECT ID_poi FROM poi ORDER BY RAND() LIMIT 10")
-        result= cursor.fetchall()
-
-
-
-    except:
-        traceback.print_exc()
-
-    db.close()
 
 if __name__ == "__main__":
     print("SEMAUTO Group Recommender System")
