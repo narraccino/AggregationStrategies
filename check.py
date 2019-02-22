@@ -103,4 +103,4 @@ def checkCompleted(groupID):
         traceback.print_exc()
         db.close()
 
-    return bool(fairness), bool(lessMostWithout)
+    return bool(fairness[0]), bool(lessMostWithout[0])
