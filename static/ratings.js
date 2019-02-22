@@ -1,38 +1,20 @@
-function collectRatings(data){
+function collectRatings(data) {
 
-    var array = data.dict;
+    console.log("Sollldiiii soldiiii");
+    var new_data = {'dict': []};
 
-    var new_data = {'dict' : []} ;
+    for (i = 0; i < data.infoPOI.length; i++) {
 
-    for(i = 0; i < array.length; i++){
+        var rating = document.getElementById(data.infoPOI[i].id).getAttribute("value");
 
-        d = array[i];
-
-        var rating = document.getElementById(d.id).getAttribute("value");
-
-        var element = {'poi' : d.poi, 'rating' : rating};
+        var element = {'poi': data.infoPOI[i].id, 'rating': rating};
         new_data.dict.push(element)
     }
 
     console.log(new_data);
 
-    // $.ajax({
-    //     type: 'POST',
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(new_data),
-    //     dataType: 'json',
-    //     url: 'http://localhost:5000/addRates',
-    //     success: function (e) {
-    //         console.log("oleeee");
-    //         console.log(e);
-    //     },
-    //     error: function(error) {
-    //         console.log("cazzzzz");
-    //         console.log(error);
-    //     }
-    // });
 
-    $.post("addRates", JSON.stringify(new_data), function(response){
+    $.post("addRates", JSON.stringify(new_data), function (response) {
 
         document.open();
         document.write(response);
@@ -41,66 +23,109 @@ function collectRatings(data){
     });
 
 
-
 }
-
 
 function populate(data){
 
-    var array = data.dict;
-    var default_div = document.getElementById("default");
-    for(i = 0; i < array.length; i++){
+    var div_containter = document.createElement("div");
+    div_containter.classList.add("container", "section");
 
-        d = array[i];
 
-        var div = default_div.cloneNode(true);
-        var img = div.getElementsByTagName("img")[0];
-        img.src = d.image;
 
-        var poi = div.getElementsByClassName('poi')[0];
-        poi.innerText = d.poi;
+    for(i = 0; i <  data.infoPOI.length ; i++) {
 
-        var cat = div.getElementsByClassName('cat')[0];
-        cat.innerText = d.cat;
+        var div_row = document.createElement("div");
+        div_row.classList.add("row");
 
-        var description = div.getElementsByClassName('description')[0];
-        description.innerText = d.description;
+        var div_col = document.createElement("div");
+        div_col.classList.add("col-md-6");
+        div_col.setAttribute("id", String(data.infoPOI[i].id));
 
-        // var sito = div.getElementsByClassName('sito')[0];
-        // sito.innerText = d.sito;
-        var sito= div.getElementsByClassName('sito')[0];
-        var str = d.sito;
-        var result = str.link(d.sito);
-        sito.innerHTML = result;
+        var attr = document.createAttribute("value");
+        attr.value = "0";
+        div_col.setAttributeNode(attr);
 
-        var spacing = document.createElement("div");
-        spacing.classList.add("spacing");
-        spacing.setAttribute("style", "display: inline-block; width: 600px");
-        div.appendChild(spacing);
 
-        var rate_div = document.createElement("div");
-        rate_div.classList.add("rateyo");
-        rate_div.setAttribute("style", "display: inline-block; position: absolute; top: 25%");
-        div.appendChild(rate_div);
+        // var attr_id = document.createAttribute("id");
+        // attr_id.value = data.infoPOI[i].id;
+        // div_col.setAttributeNode(attr_id);
 
-        div.id = d.id;
+        var h7_1 = document.createElement("h7");
+        h7_1.innerHTML = "categories:";
 
-        div.style.display = "block";
+        var h3 = document.createElement("h3");
+        h3.innerHTML = data.infoPOI[i].poi;
 
-        document.getElementById('poi-container').appendChild(div);
+        var p1 = document.createElement("p");
+        p1.innerHTML = data.infoPOI[i].cat;
+
+        var h7_2 = document.createElement("h7");
+        h7_2.innerHTML = "Description:";
+
+        var p2 = document.createElement("p");
+        p2.innerHTML = data.infoPOI[i].description;
+
+        var p3 = document.createElement("p");
+        var str = data.infoPOI[i].sito;
+        var result = str.link(data.infoPOI[i].sito);
+        p3.innerHTML = result;
+
+        var p_rate = document.createElement("p");
+        p_rate.classList.add("rateyo")
+
+
+        var div_col2 = document.createElement("div");
+        div_col2.classList.add("col-md-6");
+
+        var image = document.createElement("img");
+        image.src = "https://igx.4sqi.net/img/general/width540/U4qNR1906bNs1JJ44BdWWDU4fM8kR97wxayjTZdA8vM.jpg";
+        image.setAttribute('alt', "NO IMAGE");
+        div_col2.appendChild(image);
+
+
+
+        div_col.appendChild(h3);
+        div_col.appendChild(h7_1);
+        div_col.appendChild(p1);
+        div_col.appendChild(h7_2);
+        div_col.appendChild(p2);
+        div_col.appendChild(p3);
+        div_col.appendChild(p_rate);
+
+        if(i % 2 == 1) {
+            div_row.appendChild(div_col);
+            div_row.appendChild(div_col2);
+        }
+
+        if(i % 2 == 0)
+        {
+            div_row.appendChild(div_col2);
+            div_row.appendChild(div_col);
+        }
+
+
+        div_containter.appendChild(div_row);
     }
+            var div_button = document.createElement("div");
+            div_button.classList.add("wrapper");
+            div_button.style.position= "absolute";
+            div_button.style.width= "100%";
+            div_button.style.padding= "50px";
 
-    var button = document.createElement("div");
-    button.classList.add("container-contact100-form-btn");
-    var subbutton = document.createElement("button");
-    subbutton.classList.add("contact100-form-btn");
-    subbutton.innerText = "SUBMIT";
-    subbutton.onclick = function(){ collectRatings(data) };
-    button.appendChild(subbutton);
 
-    document.getElementById('poi-container').appendChild(button);
+            var button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("btn", "btn-secondary", "btn-lg");
+            button.innerHTML= "Submit";
+            button.onclick = function(){ collectRatings(data) };
+
+
+            div_button.appendChild(button);
+            div_containter.appendChild(div_button);
+
+            document.body.appendChild(div_containter);
+
 }
-
 
 function pop_rec(fairness, least){
 

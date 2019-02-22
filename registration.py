@@ -5,11 +5,11 @@ from random import randint
 from check import checkGroups, checkCompleted
 from recommendation import recommendation, viewList
 from semauto import semauto
-from POIFactory import createPOIUser, getSPARQLDescription
+from POIFactory import createPOIUser, getPOIGroup, getSPARQLDescription
 
 
 #svuoto le tabelle
-deletetables()
+#deletetables()
 
 app = flask.Flask(__name__)
 app.secret_key= os.urandom(24)
@@ -134,7 +134,13 @@ def login():
                 #     db.close()
 
                 jsonData = checkGroups(userID)
-                time.sleep(3)
+
+                # userID=session['userID']
+
+                with open('data.json', 'w') as file:
+                    json.dump(jsonData, file)
+
+
         except:
             print("Error: unable to fecth data")
             print("Error username or password")
@@ -180,21 +186,7 @@ def addRates():
         dicto = json.loads(list(data.keys())[0])
         array = dicto["dict"]
         ratingsArray = [int(e['rating']) for e in array]
-        #ratingsArraylists.append(ratingsArray)
-
-
-
-        listPOI = list()
-        listID = list()
-
-
-        with open("poi") as file:
-            listPOI = file.read().splitlines()
-        with open("id") as file:
-            listID = file.read().splitlines()
-
-
-        commitPOI(listID, listPOI)
+        listID = [int(e['poi']) for e in array]
 
 
 
@@ -238,7 +230,6 @@ def addInitRates():
 
         jsonData =checkGroups(session['userID'])
 
-        # userID=session['userID']
 
         return flask.render_template("homeUser.html", userID=session['userID'], jsonData=json.dumps(jsonData))
 
@@ -318,58 +309,32 @@ def rates():
             return flask.render_template("homeUser.html", jsonData=json.dumps(jsonData), userID=session['userID'])
 
         if(session['color']== 'yellow'):
-            array = list()
-            listPOI = list()
-            listCat = list()
-            listID = list()
-            listImages = list()
-            listDescriptions = list()
-            listSites = list()
 
-            with open("poi") as file:
-                listPOI = file.read().splitlines()
-            with open("cat") as file:
-                listCat = file.read().splitlines()
-            with open("id") as file:
-                listID = file.read().splitlines()
-            with open("imgs") as file:
-                listImages = file.read().splitlines()
-            with open("descriptions") as file:
-                listDescriptions = file.read().splitlines()
-            with open("site") as file:
-                listSites = file.read().splitlines()
 
-            for i in range(len(listPOI)):
-                d = dict()
-                d['poi'] = listPOI[i]
-                d['cat'] = listCat[i]
-                d['id'] = listID[i]
-                d['image'] = listImages[i]
-                d['description'] = listDescriptions[i]
-                d['sito'] = listSites[i]
+            groupID = findGroupID(session['userID'], session['groupName'])
+            jsonPOIGroup= getPOIGroup(groupID, session['userID'])
 
-                array.append(d)
-            dicto = {"dict": array}
-
-            return flask.render_template("ratings.html", data=dicto)
+            return flask.render_template("ratings.html", data=json.dumps(jsonPOIGroup))
 
         if(session['color']== 'green'):
 
 
             groupID = findGroupID(session['userID'], session['groupName'])
 
-            up =semauto()
-            print(up)
+            # up =semauto()
+            # print(up)
 
-            # #AGGREGATION STRATEGIES
-            # fa_state, less_state = checkCompleted(groupID)
-            # if(fa_state and less_state):
-            #     lmw, fa = viewList(groupID)
-            #     return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
-            # else:
-            #     recommendation(groupID)
-            #     lmw, fa = viewList(groupID)
-            #     return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
+            #AGGREGATION STRATEGIES
+            fa_state, less_state = checkCompleted(groupID)
+
+
+            if(fa_state and less_state):
+                lmw, fa = viewList(groupID)
+                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
+            else:
+                recommendation(groupID)
+                lmw, fa = viewList(groupID)
+                return flask.render_template("recommendation.html", lmw=lmw, fa=fa)
 
 #commit of groupname and userID of that group
 def commitGroup(listUserID, groupName):
@@ -390,18 +355,35 @@ def commitGroup(listUserID, groupName):
             cursor.execute("INSERT INTO groupusers(group_ID, ID_user, namegroup, voted) VALUES (%s, %s, %s, %s)", (groupID,listUserID[i], groupName, 0))
             # Commit your changes in the database
             db.commit()
-
-
             print("Group registered! ")
         except:
-            # Rollback in case there is any error
+            traceback.print_exc()
             db.rollback()
             print("Transaction group refused")
 
-    cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 1, 0))
-    db.commit()
-    cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 2, 0))
-    db.commit()
+
+
+    try:
+
+        cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 1, 0))
+        db.commit()
+        cursor.execute("INSERT INTO stategroupalgorithm(group_ID, algorithm_ID, completed) VALUES (%s, %s, %s)", (groupID, 2, 0))
+        db.commit()
+
+        cursor.execute("SELECT ID_POI FROM `poi` ORDER BY RAND() LIMIT 10")
+        result = cursor.fetchall()
+
+        for row in result:
+            IDpoi = row[0]
+
+            for userID in listUserID:
+                cursor.execute("INSERT INTO ratings(group_ID, userID, POI_ID, rate) VALUES (%s, %s, %s, %s)", (groupID, userID, IDpoi, 0))
+                db.commit()
+
+
+    except:
+        traceback.print_exc()
+
 
     db.close()
 
@@ -452,18 +434,15 @@ def commitRate(groupID,userID, listIDPOI, ratingsArray):
     #for i in range(0, len(listID)):
     for j in range(0, len(listIDPOI)):
         try:
-            # Execute the SQL command
-            # cursor.execute(sql)
 
-            cursor.execute("INSERT INTO ratings(group_ID,userID, POI_ID,rate) VALUES (%s, %s, %s, %s)",(groupID, userID, listIDPOI[j], ratingsArray[j]))
+            sql = "UPDATE ratings SET rate=%s WHERE group_ID=%s AND userID = %s AND POI_ID = %s"
+            cursor.execute(sql, (ratingsArray[j], groupID, userID, listIDPOI[j]))
 
-            # Commit your changes in the database
-            db.commit()
-            print("POI registered! ")
-        except Exception:
+
+        except:
             traceback.print_exc()
             db.rollback()
-            print("Transaction POI refused2")
+            print("Transaction POI refused in commit Rate")
 
 
 
@@ -476,6 +455,7 @@ def commitRate(groupID,userID, listIDPOI, ratingsArray):
         db.commit()
     except:
         # Rollback in case there is any error
+        traceback.print_exc()
         db.rollback()
         print("Transaction voted refused")
 
