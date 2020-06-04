@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="identifi"></p>
+    <script>
+
+        var obj = JSON.parse('{{ jsonData | safe}}');
+        if(obj.numResults==0){
+            document.getElementById('identifi').innerHTML= "NO GROUPS FOR YOU!";
+        }
+        else {
+            var listGroups = '<ul>';
+
+            for(i=0; i<obj.numResults; i++)
+            {
+
+                listGroups+= '<li>'+
+                    '<a href=' + '{{ url_for("rates", share="variable", color="colore")}}'.replace("variable", obj.infoGroups[i].nameGroup).replace("colore", obj.infoGroups[i].state) +  ' style="color:'+ obj.infoGroups[i].state + '">' + obj.infoGroups[i].nameGroup+ '</a>' +
+                     " " + "Total Users: " + obj.infoGroups[i].nameTotal + " " + "Remaining Users: "+  obj.infoGroups[i].numRemaining +" "  + '</li>';
+
+
+            }
+            listGroups += '</ul>';
+
+
+            document.getElementById('identifi').innerHTML= listGroups;
+
+        }
+
+    </script>
+
+<a type="button" class="btn btn-primary btn-lg" href="{{ url_for('homeuser') }}">Create a Group</a>
+<a type="button" class="btn btn-primary btn-lg" href="{{ url_for('logout') }}">LOGOUT</a>
+<p>ID: {{userID}}</p>
+</body>
+</html>

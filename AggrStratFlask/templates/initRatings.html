@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <title>Initial Ratings</title>
+<head>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+    <!--RATEYO-->
+    <link rel="stylesheet" type="text/css" href="../static/star_rating/jquery.rateyo.min.css">
+
+    <!--CSS init ratings-->
+    <link rel="stylesheet" type="text/css" href="../static/css/initRatings.css">
+    <meta charset="UTF-8">
+    <title>InitRatings</title>
+
+
+
+</head>
+
+
+<body>
+
+<script src="../static/star_rating/jquery.rateyo.min.js"></script>
+
+    <script src="../static/star_rating/star.js"></script>
+        <script src="../static/initRatings.js"></script>
+
+  <script>
+        var data1 = '{{ data|tojson|safe }}';
+        var dataJson = data1.substring(1, data1.length-1);
+        var  data = JSON.parse(dataJson);
+        populate(data);
+    </script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Prova</title>-->
+
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='star_rating/jquery.rateyo.min.css') }}">-->
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ratings.css') }}">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<div id="poi-container">-->
+
+    <!--<script src="{{ url_for('static',filename='star_rating/jquery.min.js') }}"></script>-->
+    <!--<script src="{{ url_for('static',filename='star_rating/jquery.rateyo.min.js') }}"></script>-->
+    <!--<script src="{{ url_for('static',filename='star_rating/star.js') }}"></script>-->
+
+    <!--<div style="position: relative; display: none;" id="default" value="0">-->
+        <!--&lt;!&ndash;<div class="img-container" style="max-height: 100px; display: inline-block;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img style="height: 200px; width: 100px"; src="" alt="Picture not available.">&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div style="display: inline-block; width: 75px"></div>-->
+        <!--<div class="metadata" style="display: inline-block; position: absolute; top: 20%">-->
+            <!--<p class="poi"></p>-->
+            <!--<p class="cat"></p>-->
+            <!--<p class ="description"></p>-->
+            <!--<p class ="sito"></p>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="spacing" style="display: inline-block; width: 75px"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="rateyo" style="display: inline-block; position: absolute; top: 25%"></div>&ndash;&gt;-->
+    <!--</div>-->
+
+    <!--<script src="{{ url_for('static',filename='initRatings.js') }}"></script>-->
+
+    <!--<script>-->
+        <!--var data1 = '{{ data|tojson|safe }}';-->
+        <!--console.log("ciao ciao");-->
+        <!--var dataJson = data1.substring(1, data1.length-1);-->
+        <!--var  data = JSON.parse(dataJson);-->
+        <!--populate(data);-->
+    <!--</script>-->
+
+    <!--&lt;!&ndash;<div class="rateyo"></div>&ndash;&gt;-->
+
+
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Prova</title>-->
+
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='star_rating/jquery.rateyo.min.css') }}">-->
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ratings.css') }}">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<div id="poi-container">-->
+
+    <!--<script src="{{ url_for('static',filename='star_rating/jquery.min.js') }}"></script>-->
+    <!--<script src="{{ url_for('static',filename='star_rating/jquery.rateyo.min.js') }}"></script>-->
+    <!--<script src="{{ url_for('static',filename='star_rating/star.js') }}"></script>-->
+
+    <!--<div style="position: relative; display: none;" id="default" value="0">-->
+        <!--<div class="img-container" style="max-height: 100px; display: inline-block;">-->
+            <!--<img style="height: 200px; width: 100px"; src="" alt="Picture not available.">-->
+        <!--</div>-->
+        <!--<div style="display: inline-block; width: 75px"></div>-->
+        <!--<div class="metadata" style="display: inline-block; position: absolute; top: 20%">-->
+            <!--<p class="poi"></p>-->
+            <!--<p class="cat"></p>-->
+            <!--<p class ="description"></p>-->
+            <!--<p class ="sito"></p>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="spacing" style="display: inline-block; width: 75px"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="rateyo" style="display: inline-block; position: absolute; top: 25%"></div>&ndash;&gt;-->
+    <!--</div>-->
+
+    <!--<script src="{{ url_for('static',filename='initRatings.js') }}"></script>-->
+
+    <!--<script>-->
+        <!--var data = '{{ jsonData | safe}}';-->
+        <!--data = JSON.parse(data);-->
+        <!--populate(data);-->
+    <!--</script>-->
+
+    <!--&lt;!&ndash;<div class="rateyo"></div>&ndash;&gt;-->
+
+
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->

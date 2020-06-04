@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+    <!--RATEYO-->
+    <link rel="stylesheet" type="text/css" href="../static/star_rating/jquery.rateyo.min.css">
+
+    <!--CSS init ratings-->
+    <link rel="stylesheet" type="text/css" href="../static/css/initRatings.css">
+    <meta charset="UTF-8">
+    <title>InitRatings</title>
+
+
+
+</head>
+
+
+<body>
+
+<script src="../static/star_rating/jquery.rateyo.min.js"></script>
+
+    <script src="../static/star_rating/star.js"></script>
+        <script src="../static/initRatings.js"></script>
+
+    <script>
+        $.getJSON("infoPOI.json", function(a){
+        populate(a);
+        });
+    </script>
+
+
+
+</body>
+</html>
+
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-6">-->
+                    <!--<h3>-->
+                        <!--Torra di Benedettu-->
+                    <!--</h3>-->
+                    <!--<h7> categories</h7>-->
+                    <!--<p> Official historical monuments of France, Towers in Corsica</p>-->
+                    <!--<p>-->
+                        <!--The Torra di Benedettu is a tower in Corsica. It is one of the Official Historical Monuments of France.-->
+                    <!--</p>-->
+                    <!--<div class="rateyo"></div>-->
+                <!--</div>-->
+                <!--<div class="col-md-6">-->
+                    <!--<img src="https://igx.4sqi.net/img/general/width540/U4qNR1906bNs1JJ44BdWWDU4fM8kR97wxayjTZdA8vM.jpg" alt=""/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-6">-->
+                    <!--<img src="https://preview.ibb.co/cu76g9/Employee-2.jpg" alt=""/>-->
+                <!--</div>-->
+                <!--<div class="col-md-6">-->
+                    <!--<h3>-->
+                        <!--Cutting-Edge Skill Development-->
+                    <!--</h3>-->
+                    <!--<p>-->
+                       <!--GetLance Academy hosts regular, rigorous learning sessions for the most in-demand skills. By presenting our elite, experienced network with ongoing opportunities to update and elevate their portfolios, we are able to solve pressing talent shortages while ensuring success for dedicated participants.-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->

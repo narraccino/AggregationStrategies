@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+
+
+    <p id="fairness-container" ></p>
+    <p id="least-container" ></p>
+
+    <script>
+
+        var far = '{{ fa | tojson | safe }}';
+        var lm = '{{ lmw | tojson | safe }}';
+        var fa = JSON.parse(far);
+        var lmw = JSON.parse(lm);
+
+
+          var listFairness = '<ol>';
+
+            for(i=0; i< fa.length; i++)
+            {
+
+                listFairness+= '<li>'+ fa[i] + '</li>';
+
+
+            }
+            listFairness += '</ol>';
+
+
+        var listLMW = '<ol>';
+
+        for(i=0; i< lmw.length; i++)
+        {
+
+            listLMW+= '<li>'+ lmw[i] + '</li>';
+
+
+        }
+        listLMW += '</ol>';
+
+        document.getElementById("fairness-container").innerHTML= listFairness;
+        document.getElementById("least-container").innerHTML= listLMW;
+
+
+    </script>
+
+</div>
+</body>
+</html>

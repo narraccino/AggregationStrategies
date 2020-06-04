@@ -1,0 +1,18 @@
+SELECT* FROM `occurrences` GROUP BY `ID_category` HAVING COUNT(*) = 1
+
+SELECT DISTINCT * FROM `occurrences`ORDER BY RAND() LIMIT 10
+
+
+SELECT * FROM `poi` JOIN `occurrences` on poi.ID_POI = occurrences.ID_POI ORDER BY RAND() LIMIT 10
+
+
+SELECT q1.namegroup, q1.total, q1.total - q2.sumVoted AS remaining , q1.group_ID 
+FROM 
+(SELECT namegroup, COUNT(*) AS total, group_ID FROM groupusers RIGHT OUTER JOIN user ON user_ID = %s WHERE namegroup IS NOT NULL GROUP BY namegroup ) q1 
+JOIN 
+(SELECT namegroup, SUM(voted) AS sumVoted FROM groupusers RIGHT OUTER JOIN user ON user_ID = %s WHERE voted IS NOT NULL GROUP BY namegroup) q2 
+on q1.namegroup = q2.namegroup
+
+
+
+SELECT qa.ID_POI, qa.name_POI, qa.link, name_category FROM (SELECT q1.ID_poi, name_POI, link, ID_category FROM (SELECT * FROM `poi` ORDER BY RAND() LIMIT 10) q1 JOIN `occurrences` ON occurrences.ID_POI = q1.ID_POI) qa JOIN `category` ON category.ID_category = qa.ID_category

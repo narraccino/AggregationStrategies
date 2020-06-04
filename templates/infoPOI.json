@@ -1,0 +1,84 @@
+{
+  "infoPOI": [
+    {
+      "poi": "Royal Palace of Amsterdam",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Palacio_Real%2C_%C3%81msterdam%2C_Pa%C3%ADses_Bajos%2C_2016-05-30%2C_DD_07-09_HDR.jpg",
+      "cat": "Official historical monuments of Netherlands, Museum",
+      "id": 154592,
+      "description": "The Royal Palace of Amsterdam in Amsterdam (Dutch: Koninklijk Paleis van Amsterdam or Paleis op de Dam) is one of three palaces in the Netherlands which are at the disposal of the monarch by Act of Parliament. It is situated on the west side of Dam Square in the centre of Amsterdam, opposite the War Memorial and next to the Nieuwe Kerk.The palace was built as a city hall during the Dutch Golden Age in the 17th century. The building became the royal palace of King Louis Napoleon and later of the Dutch Royal House.",
+      "sito": "https://www.paleisamsterdam.nl"
+    },
+    {
+      "poi": "Corrigan Park",
+      "img": "https://igx.4sqi.net/img/general/width537/YcXHIwMNjJogMvYCBgsy9OUBQP2XEbZ8SL7RcXhoiYQ.jpg",
+      "cat": "Sports venues completed in 1927, Sports venues in Belfast, Gaelic games grounds in Northern Ireland",
+      "id": 156175,
+      "description": "Corrigan Park is a GAA ground on the Whiterock Road in West Belfast that served as the main venue for Gaelic Games in Belfast until the opening of Casement Park in 1953. It is named in honour of Sean Corrigan, mentor of the Brian Óg club who were Antrim’s first hurling champions. It is designated as a ground with a capacity of more than 5,000 by Belfast City Council.",
+      "sito": "http://dbpedia.org/resource/Corrigan_Park"
+    },
+    {
+      "poi": "Jack's Creek Covered Bridge",
+      "img": "https://igx.4sqi.net/img/general/width612/4292784_EzNOBke4dkk7n1scat-BmpJrdnaqZcfMyf_4XjuMvS8.jpg",
+      "cat": "Road bridges in Virginia, Road bridges on the National Register of Historic Places in Virginia, Buildings and structures in Patrick County, Virginia, National Register of Historic Places in Patrick County, Virginia, Covered bridges in Virginia, Bridges completed in 1914, Transportation in Patrick County, Virginia, Covered bridges on the National Register of Historic Places in Virginia, Wooden bridges in Virginia, Visitor attractions in Patrick County, Virginia",
+      "id": 155531,
+      "description": "The Jack's Creek Covered Bridge, also known as the Upper Covered Bridge, is a county-owned wooden covered bridge that spans the Smith River in Patrick County, Virginia, United States. It is located on Jack's Creek Road (SR 615) off State Route 8 just south of the community of Woolwine, about 11 miles (18 kilometers) north of Stuart. Coordinates are 36°45′51.14″N 80°16′23.98″W﻿ / ﻿36.7642056°N 80.2733278°W (36.764206, -80.273328). Built in 1914 (some sources say 1916), the 48-foot (15-meter) bridge is a Queen-post truss construction over a single span. Its WGCB number is 46-68-02. The Jack's Creek Covered Bridge was listed on the National Register of Historic Places on May 22, 1973. It is the only historic covered bridge remaining in Patrick County, maintained by the Patrick County government.",
+      "sito": "http://dbpedia.org/resource/Jack's_Creek_Covered_Bridge"
+    },
+    {
+      "poi": "Dolmen of Cunha Baixa",
+      "img": "https://igx.4sqi.net/img/general/width720/458907_g2DGOOHVX6l89PbCWv6kuEG5vU8_GByzwK41u6dcNpA.jpg",
+      "cat": "Dolmens in Portugal, National monuments in Portugal, Buildings and structures in Viseu District",
+      "id": 152388,
+      "description": "The Dolmen of Cunha Baixa (Portuguese: Anta de Cunha Baixa) is a dolmen in the civil parish of Cunha Baixa, in the municipality of Mangualde. It is located in a valley area of the Rio Castelo, between the villages of Cunha Baixa and Espinho.",
+      "sito": "http://dbpedia.org/resource/Dolmen_of_Cunha_Baixa"
+    },
+    {
+      "poi": "Faulkner Escarpment",
+      "img": "https://igx.4sqi.net/img/general/width717/4672131_nDh0RmoQU4Fgtqf-7h-pk05oP_s4xFWtsxBFG0Bx1AM.jpg",
+      "cat": "Amundsen Coast, Landforms of the Ross Dependency, Escarpments of Antarctica",
+      "id": 155445,
+      "description": "Faulkner Escarpment (86°12′S 156°0′W﻿ / ﻿86.200°S 156.000°W) is an ice-covered escarpment, 30 nautical miles (56 km) long and over 3,000 metres (9,800 ft) high, trending in a north-south direction and forming the eastern edge of Nilsen Plateau and Fram Mesa in the Queen Maud Mountains of Antarctica. It was discovered in December 1934 by the Byrd Antarctic Expedition geological party under Quin Blackburn, and named by Richard E. Byrd for Charles J. Faulkner, Jr., chief counsel of Armour and Company of Chicago, contributors to the expedition.",
+      "sito": "http://dbpedia.org/resource/Faulkner_Escarpment"
+    },
+    {
+      "poi": "Arlington Arts Center",
+      "img": "https://igx.4sqi.net/img/general/width1440/6836141_BPf07Cmm5cUcuAQu2a-bkGSzfM9El1ODa0uWcXPTzhs.jpg",
+      "cat": "Art galleries established in 1974, Arts centers in Virginia, Visitor attractions in Arlington County, Virginia, 1974 establishments in Virginia",
+      "id": 152408,
+      "description": "Arlington Arts Center also known as AAC, is a 501(c)(3) nonprofit contemporary visual arts center based in Arlington (Virginia) and established in 1974. Housed since 1976 in the historic Maury School, it presents artworks from regional artists in the mid-Atlantic states. The center is composed of exhibitions, educational programs and subsidized studio spaces and wants to increase awareness and appreciation of, and involvement in, the visual arts in Arlington County VA and the region. At 17,000 square feet, the facility includes 9 exhibitions galleries, working studios for 13 artists and 2 classrooms and is one of the largest non-federal venues for contemporary art in the Washington metropolitan area.",
+      "sito": "http://dbpedia.org/resource/Arlington_Arts_Center"
+    },
+    {
+      "poi": "Lakeview Park (Seattle)",
+      "img": "https://igx.4sqi.net/img/general/width1080/3492387_CWmf0HwoZGrw-ORZjv_zOpip4G307QdKDAksd0zzB-w.jpg",
+      "cat": "Parks in Seattle",
+      "id": 152420,
+      "description": "Lakeview Park is a 4.5 acre (18,000 m²) park in the Denny-Blaine neighborhood of Seattle, Washington, designed as part of the Olmsted Brothers park system in Seattle. It is located on both sides of Lake Washington Boulevard E. as it winds down a hillside toward Lake Washington. The western half is a bowl-like park with grass and trees along Dorffel Drive E. and E. Harrison Street; the eastern half incorporates a lookout at the end of E. Harrison Street and undeveloped hillside between Hillside Drive E. and McGilvra Boulevard E. The upper campus of The Bush School is located across E. Harrison Street and Hillside Drive E. from the park. This Seattle Park is also known to many as Mud Park because in the rain it becomes somewhat of a mud pit.",
+      "sito": "http://dbpedia.org/resource/Lakeview_Park_(Seattle)"
+    },
+    {
+      "poi": "Viljandi linnastaadion",
+      "img": "https://igx.4sqi.net/img/general/width640/24662920_Quv-1N8XC6D71sgF-HBdlr_4YLO9Jkc8CSgM546Ceus.jpg",
+      "cat": "Football venues in Estonia, 1928 establishments in Estonia, Multi-purpose stadiums in Estonia, Sport in Viljandi, Event venues established in 1928, Buildings and structures in Viljandi County, Athletics (track and field) venues in Estonia",
+      "id": 155721,
+      "description": "Viljandi linnastaadion is a multi-purpose stadium in Viljandi, Estonia. It is used mostly for football matches and hosts the matches of FC Viljandi. The stadium has 1,006 seats of which 400 are under the roof.",
+      "sito": "http://dbpedia.org/resource/Viljandi_linnastaadion"
+    },
+    {
+      "poi": "Chrysoroyiatissa Monastery",
+      "img": "https://igx.4sqi.net/img/general/width1068/25279583_F4ePzEDpDMbXa09GlaUq1bu6si8EzdZ8Ju2pfD8fMKw.jpg",
+      "cat": "Christian monasteries established in the 12th century, Greek Orthodox monasteries, Cypriot Orthodox monasteries",
+      "id": 153046,
+      "description": "Chrysoroyiatissa (Greek:Χρυσορρογιάτισσα) is a monastery dedicated to Our Lady of the Golden Pomegranate located about 40 km north-east of Paphos at an altitude of around 2,700 feet. It was founded by a monk called Ignatius (Ιγνάτιος) in the 12th century. It lies 1.5 km from the today village of Panayia, birthplace of the late Archbishop Makarios. The present building dates to 1770. Celebrations are held yearly on 15 August in honour of the Virgin Mary. In the mid 1980s the old winery of the monastery was reopened and now runs (successfully) on a commercial basis. It produces wines from the Monastery's own vineyards.",
+      "sito": "http://dbpedia.org/resource/Chrysoroyiatissa_Monastery"
+    },
+    {
+      "poi": "Cowles Mountain",
+      "img": "https://igx.4sqi.net/img/general/width720/IQRE0TJFX3HUFGDQCIQF2MJZ4CFAQ5GN3WA5M15JSSGHBWJW.jpg",
+      "cat": "Parks in San Diego, Mountains of Southern California, Mountains of San Diego County, California, San Diego State University",
+      "id": 156563,
+      "description": "Cowles Mountain (pronounced coals, not COWles) is a prominent mountain located in the San Carlos neighborhood, within the City of San Diego, San Diego County, California. The 1,593-foot (486 m) summit is the highest point of the city of San Diego. It is protected within Mission Trails Regional Park. While many people pronounce \"Cowles\" to rhyme with \"towels,\" the pronunciation of the name should be like \"Coals\" as this is how George Cowles's family was known.",
+      "sito": "http://dbpedia.org/resource/Cowles_Mountain"
+    }
+  ]
+}

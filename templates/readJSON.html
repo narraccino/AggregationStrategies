@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>InitRatings</title>
+
+</head>
+
+
+<body>
+
+
+
+    <script>
+
+        $.getJSON("infoPOI.json", function(a){
+            console.log("ciaoooo" + a.infoPOI[0].poi);
+            populate(a);
+        });
+
+
+    </script>
+
+</body>
+</html>

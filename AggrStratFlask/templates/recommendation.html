@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reccomendation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ratings.css') }}">
+</head>
+<body>
+
+    <script src="{{ url_for('static',filename='ratings.js') }}"></script>
+
+    <!--<div style="position: relative; display: none;" id="default" value="0">-->
+
+    <!--<div class="metadata" style="display: inline-block; position: absolute; top: 20%">-->
+    <!--<p class="poi"></p>-->
+    <!--<p class="cat"></p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="spacing" style="display: inline-block; width: 75px"></div>&ndash;&gt;-->
+    <!--<div class="rateyo" style="display: inline-block; position: absolute; top: 25%"></div>-->
+
+    <div id="fairness-container">
+
+        <p id="fairness">The ordered list with FairenessAverage is this:</p>
+
+
+    </div>
+
+    <div id="least-container">
+
+        <p id="least">The ordered list with LeastMostWithout is this:</p>
+
+
+
+    </div>
+
+<a type="button" class="btn btn-primary btn-lg" href="{{ url_for('logout') }}">LOGOUT</a>
+    <a type="button" class="btn btn-primary btn-lg" href="{{ url_for('login') }}">HOME</a>
+
+
+    <script>
+
+        var far = '{{ fa | tojson | safe }}';
+        var lm = '{{ lmw | tojson | safe }}';
+        var fa = JSON.parse(far);
+        var lmw = JSON.parse(lm);
+
+
+          var listFairness = '<ol>';
+
+            for(i=0; i< fa.length; i++)
+            {
+
+                listFairness+= '<li>'+ fa[i] + '</li>';
+
+
+            }
+            listFairness += '</ol>';
+
+
+        var listLMW = '<ol>';
+
+        for(i=0; i< lmw.length; i++)
+        {
+
+            listLMW+= '<li>'+ lmw[i] + '</li>';
+
+
+        }
+        listLMW += '</ol>';
+
+        document.getElementById("fairness-container").innerHTML= listFairness;
+        document.getElementById("least-container").innerHTML= listLMW;
+
+
+    </script>
+
+
+</div>
+</body>
+</html>
